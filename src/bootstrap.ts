@@ -37,8 +37,7 @@ export const runServer = async (MODE: string): Promise<Server | null> => {
         else console.log('PostgresFactory : 풀 커넥션이 연결되어 있습니다.');
 
         const logger = await LoggerProvider.initialize('logs');
-        if (logger === null || !logger) throw new Error('로거가 생성되지 않았습니다.');
-        else console.log('LoggerProvider : 로거가 설정되었습니다,');
+        console.log('LoggerProvider : 로거가 설정되었습니다,');
 
         const container: Container = createContainer(MODULES, FILTERS);
         const serverContainer: InversifyExpressServer = createServer(container);

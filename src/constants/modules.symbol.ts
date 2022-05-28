@@ -7,10 +7,8 @@ export interface I_MODULES {
     ResponseProvider: symbol,
     JoiProvider: symbol,
 
-    AuthService: symbol,
     HomeService: symbol,
 
-    AuthRepository: symbol,
     HomeRepository: symbol,
 
 };
@@ -25,10 +23,8 @@ export const MODULES: I_MODULES = {
     ResponseProvider: Symbol.for('ResponseProvider'),
     JoiProvider: Symbol.for('JoiProvider'),
 
-    AuthService: Symbol.for('AuthService'),
     HomeService: Symbol.for('HomeService'),
 
-    AuthRepository: Symbol.for('AuthRepository'),
     HomeRepository: Symbol.for('HomeRepository'),
 
 };
