@@ -1,7 +1,7 @@
 import * as faker from 'faker';
 
 // Mock Target
-import { IPoolConfig } from '../../../src/models/interface.loader';
+import { IPoolConfig } from '../../../../src/models/interface.loader';
 
 
 export const craeteIPoolConfig = (): IPoolConfig => {

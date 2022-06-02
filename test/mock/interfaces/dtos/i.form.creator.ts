@@ -1,7 +1,7 @@
 import * as faker from 'faker';
 
 // Mock Target
-import { IForm } from '../../../src/models/interface.loader';
+import { IForm } from '../../../../src/models/interface.loader';
 
 
 export const createIForm = (): IForm => {
