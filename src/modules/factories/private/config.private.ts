@@ -19,23 +19,27 @@ export const getOptionInstance = (MODE: string): DotenvConfigOptions => {
 export const setConfigPathByOption = (option: DotenvConfigOptions): DotenvConfigOutput => {
     return config(option);
 }
-export const  getConfigInstance = (): IConfig => {
-    return new Config();
+export const getConfigInstance = async (): Promise<Config> => {
+    return await new Config();
 }
-export const isValidOfConfig = (config: IConfig): boolean => {
+
+// /**
+//  * @deprecated
+//  */
+// export const isValidOfConfig = (config: IConfig): boolean => {
     
-    for (const conf of config) {
-        if (conf instanceof Object) {
+//     for (const conf of config) {
+//         if (conf instanceof Object) {
             
-            for (const c of conf)
-                if (!c) return false;
+//             for (const c of conf)
+//                 if (!c) return false;
 
-        } else {
+//         } else {
 
-            if (!conf) return false;
+//             if (!conf) return false;
 
-        }
-    }
+//         }
+//     }
 
-    return true;
-}
+//     return true;
+// }

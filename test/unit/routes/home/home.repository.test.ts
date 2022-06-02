@@ -1,38 +1,28 @@
 import 'reflect-metadata';
+import { DevQueryBuilder, PostgresFactory } from '../../../../src/modules/module.loader';
+
+// Testing Module
 import { HomeRepository } from '../../../../src/routes/repository.loader';
 
 
 describe ('Home Repository', () => {
     
+    let devQuery: DevQueryBuilder;
+    let pgFactory: PostgresFactory;
     let homeRepository: HomeRepository;
 
-    beforeEach(() => {
-        homeRepository = new HomeRepository();
-    });
+    beforeAll(() => {
 
-    describe ('properties', () => {
-
-        it ('has 1 func', () => {
-
-            expect(Object.keys(homeRepository).length).toBe(0);
-            
-            expect(homeRepository.get).toBeDefined();
-
-        });
+        devQuery = new DevQueryBuilder();
+        pgFactory = new PostgresFactory();
+        homeRepository = new HomeRepository(devQuery, pgFactory);
 
     });
 
-    describe ('logics', () => {
-
-        it ('this.get return \'auth\'', () => {
-
-            const reuslt = homeRepository.get();
-
-            expect(typeof reuslt).toBe('string');
-            
-        });
-
+    it ('has 2 properties', () => expect(Object.keys(homeRepository).length).toBe(2));
+    it('has 2 properties', () => {
+        expect(homeRepository.join).toBeDefined();
+        expect(homeRepository.login).toBeDefined();
     });
-
 
 });

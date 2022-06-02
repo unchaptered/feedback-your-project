@@ -9,14 +9,13 @@ import mockCreator from '../../../../mock/mock.creator';
 
 describe ('Extracted Functions for Testing to ConfigFactory', () => {
 
-    it ('has 4 properties', () => {
+    it ('has 3 properties', () => {
 
-        expect(Object.keys(ConfigPrivate).length).toBe(4);
+        expect(Object.keys(ConfigPrivate).length).toBe(3);
 
         expect(ConfigPrivate.getOptionInstance).toBeDefined();
         expect(ConfigPrivate.setConfigPathByOption).toBeDefined();
         expect(ConfigPrivate.getConfigInstance).toBeDefined();
-        expect(ConfigPrivate.isValidOfConfig).toBeDefined();
         
     });
 
@@ -59,39 +58,6 @@ describe ('Extracted Functions for Testing to ConfigFactory', () => {
             const path: DotenvConfigOutput = ConfigPrivate.setConfigPathByOption(option);
             expect(path).toBeDefined();
             expect(path?.parsed).toBeDefined();
-            
-        });
-
-    });
-
-    describe ('isValidOfConfig', () => {
-
-        it ('if value === undefined, return false 1', () => {
-
-            const config: IConfig = mockCreator.iConfig.craeteIConfig();
-            if (config) config.PORT = undefined;
-
-            const isValid: boolean = ConfigPrivate.isValidOfConfig(config);
-            expect(isValid).toBeFalsy();
-            
-        });
-
-        it ('if value === undefined, return false 2', () => {
-
-            const config: IConfig = mockCreator.iConfig.craeteIConfig();
-            if (config.PG_POOL) config.PG_POOL.PORT = undefined;
-
-            const isValid: boolean = ConfigPrivate.isValidOfConfig(config);
-            expect(isValid).toBeFalsy();
-            
-        });
-
-        it ('if value !== undefined, return true', () => {
-
-            const config: IConfig = mockCreator.iConfig.craeteIConfig();
-
-            const isValid: boolean = ConfigPrivate.isValidOfConfig(config);
-            expect(isValid).toBeTruthy();
             
         });
 

@@ -5,32 +5,27 @@ export const getTimeFormat = (): winston.Logform.Format => winston.format.timest
 
 export const getStringFormat = (): winston.Logform.Format => winston.format.printf(info => `${info.timestamp} # ${info.level} # ${info.message}`);
 
-export const getBaseTrans = (logDir: string): winstonDaily.DailyRotateFileTransportOptions => {
-    return {
-        datePattern: 'YY-MM-DD',
-        maxFiles: 30,
-        zippedArchive: true
-    };
-};
-
 export const getPassTrans = (logDir: string): winstonDaily.DailyRotateFileTransportOptions => {
-
-    const base = getBaseTrans(logDir);
-    base.level = 'info';
-    base.dirname = logDir;
-    base.filename = '%DATE%.log';
-
-    return base;
+    return {
+        level: 'info',
+        dirname: logDir,
+        filename: '%DATE%.log',
+        maxFiles: 30,
+        zippedArchive: true,
+        datePattern: 'YY-MM-DD',
+    };
 };
 
 export const getErrTrans = (logDir: string): winstonDaily.DailyRotateFileTransportOptions => {
 
-    const base = getBaseTrans(logDir);
-    base.level = 'error';
-    base.dirname = logDir + '/error';
-    base.filename = '%DATE%.error.log';
-
-    return base;
+    return {
+        level: 'error',
+        dirname: logDir + '/error',
+        filename: '%DATE%.error.log',
+        maxFiles: 30,
+        zippedArchive: true,
+        datePattern: 'YY-MM-DD',
+    };
     
 };
 

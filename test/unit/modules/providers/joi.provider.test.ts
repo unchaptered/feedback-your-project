@@ -2,9 +2,9 @@ import 'reflect-metadata';
 
 // Testing Module
 import { JoiProvider } from '../../../../src/modules/providers/joi.provider';
+import { JoiIDevForLogin, JoiIDevForJoin, JoiIDevForToken } from '../../../../src/models/class.loader';
 
 // Dtos & Creator
-import { IUser, IUserDetail } from '../../../../src/models/interface.loader';
 import mockCreator from '../../../mock/mock.creator';
 
 
@@ -13,77 +13,88 @@ describe ('Joi Provider', () => {
     let joiProvider: JoiProvider;
 
     beforeAll(() => {
-        joiProvider = new JoiProvider();
+        joiProvider = new JoiProvider(
+            new JoiIDevForLogin(),
+            new JoiIDevForJoin(),
+            new JoiIDevForToken());
     });
 
-    describe ('properties', () => {
-        
-        it ('2 joi obj', () => {
 
-            expect(joiProvider.UserJoi).toBeDefined();
-            expect(joiProvider.UserDetailJoi).toBeDefined();
-
-        });
-
-        it ('2 func', () => {
-
-            expect(typeof joiProvider.validateUser).toBe('function');
-            expect(typeof joiProvider.validateUserDetail).toBe('function');
-
-        });
-
+    it ('has 3 properties', () => expect(Object.keys(joiProvider).length).toBe(4));
+    it ('has 3 functions', () => {
+        expect(joiProvider.validateIDevForJoin).toBeDefined();
+        expect(joiProvider.validateIDevForLogin).toBeDefined();
+        expect(joiProvider.validateIDevForToken).toBeDefined();
     });
+
 
     describe ('logics', () => {
 
-        describe ('validateUserDetail', () => {
 
-            it ('should return IUserDetail', async () => {
+        describe ('validateIDevForJoin', () => {
 
-                const user: IUserDetail = mockCreator.iUser.createIUserDetail();
-
-                const userAft = await joiProvider.validateUserDetail(user);
-                expect(userAft instanceof Error).toBeFalsy();
-    
+            it ('should return IDevForJoin', async () => {
+                const res = await joiProvider.validateIDevForJoin(
+                    mockCreator.Service.iDev.createIDevForJoin(true)
+                );
+            
+                expect(res).not.toBeInstanceOf(Error);
             });
 
             it ('should return Error', async () => {
-
-                const user: IUserDetail = mockCreator.iUser.createIUserDetail();
-                user.email = user.email.substring(1, 1);
-
-                const userAft = await joiProvider.validateUserDetail(user);
-                expect(userAft instanceof Error).toBeTruthy();
-    
+                const res = await joiProvider.validateIDevForJoin(
+                    mockCreator.Service.iDev.createIDevForJoin(false)
+                );
+            
+                expect(res).toBeInstanceOf(Error);
             });
 
         });
 
-        describe ('validateUser', () => {
 
-            it ('should return IUser', async () => {
+        describe ('validateIDevForLogin', () => {
 
-                const user: IUser = mockCreator.iUser.createIUser();
-                
-                const userAft = await joiProvider.validateUser(user);
-                expect(userAft instanceof Error).toBeFalsy();
-
+            it ('should return IDevForLogin', async () => {
+                const res = await joiProvider.validateIDevForLogin(
+                    mockCreator.Service.iDev.createIDevForLogin(true)
+                );
+            
+                expect(res).not.toBeInstanceOf(Error);
             });
 
-            it ('should return IUser', async () => {
-
-                const user: IUser = mockCreator.iUser.createIUser();
-                user.email = user.email.substring(1, 1);
-
-                const userAft = await joiProvider.validateUser(user);
-                expect(userAft instanceof Error).toBeTruthy();
-
+            it ('should return Error', async () => {
+                const res = await joiProvider.validateIDevForLogin(
+                    mockCreator.Service.iDev.createIDevForLogin(false)
+                );
+            
+                expect(res).toBeInstanceOf(Error);
             });
 
         });
+
+
+        describe ('validateIDevForToken', () => {
+
+            it ('should return IDevForJoin', async () => {
+                const res = await joiProvider.validateIDevForToken(
+                    mockCreator.Service.iDev.createIDevForToken(true)
+                );
+            
+                expect(res).not.toBeInstanceOf(Error);
+            });
+
+            it ('should return Error', async () => {
+                const res = await joiProvider.validateIDevForToken(
+                    mockCreator.Service.iDev.createIDevForToken(false)
+                );
+            
+                expect(res).toBeInstanceOf(Error);
+            });
+
+        });
+
 
     });
-
     
 
 });

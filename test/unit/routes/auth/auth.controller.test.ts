@@ -1,66 +1,32 @@
 import 'reflect-metadata';
+
+// Testing Module
 import { AuthController } from '../../../../src/routes/controller.loader';
 import { AuthRepository } from '../../../../src/routes/repository.loader';
 import { AuthService } from '../../../../src/routes/service.loader';
-
-import { JoiProvider, LoggerProvider, ResponseProvider } from '../../../../src/modules/module.loader';
+import { DevQueryBuilder, LoggerProvider, PostgresFactory, ResponseProvider, TokenFactory } from '../../../../src/modules/module.loader';
 
 
 describe ('Auth Controller', () => {
-    
-    let authRepository: AuthRepository;
-    let authService: AuthService;
 
-    let joiProvider: JoiProvider;
     let logProvider: LoggerProvider;
-    let responseProvider: ResponseProvider;
-
+    let authService: AuthService;
     let authController: AuthController;
 
-    beforeEach(() => {
-        authRepository = new AuthRepository();
-        authService = new AuthService(authRepository);
-
-        joiProvider = new JoiProvider();
-        responseProvider = new ResponseProvider();
-
-        authController = new AuthController(joiProvider, logProvider, responseProvider, authService);
-    });
-    
-    describe ('properties', () => {
-
-        it ('4 keys', () => {
-
-            expect(Object.keys(authController).length).toBe(4);
-
-        });
-
-        it ('1 public func', () => {
-            
-            expect(authController.get).toBeDefined();
-            
-        });
-
+    beforeAll(() => {
+        logProvider = new LoggerProvider();
+        authService = new AuthService(
+            new AuthRepository(new DevQueryBuilder(), new PostgresFactory()),
+            new TokenFactory(),
+            new ResponseProvider()
+        );
+        authController = new AuthController(logProvider, authService);
     });
 
-    describe ('logics', () => {
-
-        beforeEach(() => {
-            authService.get = jest.fn();
-        });
-
-        afterEach(() => {
-            jest.clearAllMocks();
-        });
-
-        it ('this.get call service.get', () => {
-
-            authController.get();
-
-            expect(authService.get).toBeCalledTimes(1);
-            
-        });
-
+    it ('has 2 properties', () => expect(Object.keys(authController).length).toBe(2));
+    it ('has 2 functions', () => {
+        expect(authController.publishToken).toBeDefined();
+        expect(authController.republishAccessToken).toBeDefined();
     });
 
 });

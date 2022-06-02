@@ -1,70 +1,32 @@
 import 'reflect-metadata';
+
+// Testing Module
 import { HomeController } from '../../../../src/routes/controller.loader';
 import { HomeRepository } from '../../../../src/routes/repository.loader';
 import { HomeService } from '../../../../src/routes/service.loader';
-
-import { JoiProvider, LoggerProvider, ResponseProvider } from '../../../../src/modules/module.loader';
+import { DevQueryBuilder, LoggerProvider, PostgresFactory, ResponseProvider } from '../../../../src/modules/module.loader';
 
 
 describe ('Home Controller', () => {
-    
-    let homeRepository: HomeRepository;
-    let homeService: HomeService;
 
-    let joiProvider: JoiProvider;
     let logProvider: LoggerProvider;
-    let responseProvider: ResponseProvider;
-
+    let homeService: HomeService;
     let homeController: HomeController;
 
-    beforeEach(() => {
-        homeRepository = new HomeRepository();
-        homeService = new HomeService(homeRepository);
-
-        joiProvider = new JoiProvider();
+    beforeAll(() => {
         logProvider = new LoggerProvider();
-        responseProvider = new ResponseProvider();
-
-        homeController = new HomeController(joiProvider, logProvider, responseProvider, homeService);
+        homeService = new HomeService(
+            new HomeRepository(new DevQueryBuilder(), new PostgresFactory()),
+            new ResponseProvider()
+        );
+        homeController = new HomeController(homeService, logProvider);
     });
 
-    describe ('properties', () => {
-
-        it ('4 keys', () => {
-
-            expect(Object.keys(homeController).length).toBe(4);
-
-        });
-
-        it ('3 public func', () => { 
-            
-            expect(homeController.get).toBeDefined();
-            expect(homeController.join).toBeDefined();
-            expect(homeController.login).toBeDefined();
-
-        });
-
-    });
-
-    
-    describe ('logics', () => {
-
-        beforeEach(() => {
-            homeService.get = jest.fn();
-        });
-
-        afterEach(() => {
-            jest.clearAllMocks();
-        });
-
-        it ('this.get call repository.get', () => {
-
-            homeController.get();
-
-            expect(homeService.get).toBeCalledTimes(1);
-            
-        });
-
+    it ('has 2 properties', () => expect(Object.keys(homeController).length).toBe(2));
+    it ('has 2 function', () => {
+        expect(homeController.get).toBeDefined();
+        expect(homeController.join).toBeDefined();
+        expect(homeController.login).toBeDefined();
     });
 
 });

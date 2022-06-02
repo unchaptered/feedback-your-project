@@ -1,6 +1,27 @@
 // Mock Target
-import { Pool, PoolClient } from "pg";
+import { PoolClient } from "pg";
 
+// const createMockQueryResult = async (): Promise<QueryResult<any>> => {
+
+//     return {
+//         oid: 1,
+//         command: 'test',
+//         fields: [],
+//         rowCount: 3,
+//         rows: [ 'one','two','three' ]
+//     };
+
+// };
+
+// const createMockQueryArrayResult = async (): Promise<QueryArrayResult<any>> => {
+
+//     try {
+//         return await createMockQueryResult()
+//     } catch (err) {
+//         return err;
+//     }
+
+// }
 
 export const createPoolClient = (): PoolClient => {
 

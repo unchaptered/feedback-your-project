@@ -1,3 +1,5 @@
 // this is ioc files
-import './auth/auth.controller';
 import './home/home.controller';
+import './auth/auth.controller';
+import './admin/admin.controller';
+import './feedback/feedback.controller';

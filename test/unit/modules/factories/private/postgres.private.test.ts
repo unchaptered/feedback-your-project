@@ -32,7 +32,7 @@ describe ('Postgres Private', () => {
 
         it ('should return PoolConfig', () => {
 
-            const poolConfig: IPoolConfig = mockCreator.iPoolConfig.craeteIPoolConfig();
+            const poolConfig: IPoolConfig = mockCreator.Config.iPoolConfig.craeteIPoolConfig();
             const option: PoolConfig = PostgresPrivate.getOptionInstance(poolConfig);
 
             expect(Object.keys(option).length).toBe(5);
@@ -45,7 +45,7 @@ describe ('Postgres Private', () => {
 
         it ('should return true', () => {
 
-            const poolConfig: IPoolConfig = mockCreator.iPoolConfig.craeteIPoolConfig();
+            const poolConfig: IPoolConfig = mockCreator.Config.iPoolConfig.craeteIPoolConfig();
             const option: PoolConfig = PostgresPrivate.getOptionInstance(poolConfig);
             const pool: Pool = PostgresPrivate.setPoolByOption(option);
 

@@ -1,37 +1,40 @@
 import 'reflect-metadata';
+
+// Testing Module
 import { AuthRepository } from '../../../../src/routes/repository.loader';
+
+// Providers
+import { PostgresFactory, DevQueryBuilder, ConfigFactory } from '../../../../src/modules/module.loader';
+
+// Dtos & Creator
+import { IDevForLogin } from '../../../../src/models/interface.loader';
+import mockCreator from '../../../mock/mock.creator';
 
 
 describe ('Auth Repository', () => {
-    
-    let authRepository: AuthRepository;
 
-    beforeEach(() => {
-        authRepository = new AuthRepository();
-    });
+    let pgFactory: PostgresFactory;
+    let devQuery: DevQueryBuilder;
 
-    describe ('properties', () => {
+    let authRepo: AuthRepository;
 
-        it ('has 1 func', () => {
+    beforeAll( async () => {
 
-            expect(Object.keys(authRepository).length).toBe(0);
-            
-            expect(authRepository.get).toBeDefined();
+        const MODE = process?.env?.NODE_ENV ?? 'test';
+        const config = await ConfigFactory.initialize(MODE);
+        const pool = await PostgresFactory.initialize(config?.POOL_CONF);
 
-        });
+        devQuery = new DevQueryBuilder();
+        pgFactory = new PostgresFactory();
+        pgFactory.getClient = jest.fn(async () => mockCreator.pool.createPoolClient());
 
-    });
-
-    describe ('logics', () => {
-
-        it ('this.get return \'auth\'', () => {
-
-            const reuslt = authRepository.get();
-
-            expect(typeof reuslt).toBe('string');
-            
-        });
+        authRepo = new AuthRepository(devQuery, pgFactory);
 
     });
+
+
+    it ('has 2 properties', () => expect(Object.keys(authRepo).length).toBe(2));
+    it ('has 1 function', () => expect(authRepo.publishToken).toBeDefined());
+
 
 });
