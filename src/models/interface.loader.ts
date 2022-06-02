@@ -12,7 +12,11 @@ import { ICustomException } from './interfaces/dtos/i.error';
 import { IDev, IDevForLogin, IDevForJoin, IDevForToken } from './interfaces/services/i.dev';
 import { ISite } from './interfaces/services/i.site';
 
+// Joi
+import { IJoiBuilder } from './interfaces/services/i.joi.i.dev';
+
 export {
+    
     IConfig,
     ILogConfig,
     IPoolConfig,
@@ -28,5 +32,7 @@ export {
     IDevForJoin,
     IDevForLogin,
     IDevForToken,
+
+    IJoiBuilder
     
 };

@@ -8,11 +8,11 @@ import { provide } from 'inversify-binding-decorators';
 import { JOYS } from '../../../constants/constant.loader';
 
 // Dtos
-import { IDevForJoin, IDevForLogin, IDevForToken } from '../../interface.loader';
+import { IDevForJoin, IDevForLogin, IDevForToken, IJoiBuilder } from '../../interface.loader';
 
 
 @provide(JOYS.iDevForLogin)
-export class JoiIDevForLogin {
+export class JoiIDevForLogin implements IJoiBuilder<IDevForJoin> {
 
     constructor() {}
 
@@ -26,7 +26,7 @@ export class JoiIDevForLogin {
 }
 
 @provide(JOYS.iDevForJoin)
-export class JoiIDevForJoin {
+export class JoiIDevForJoin implements IJoiBuilder<IDevForLogin> {
 
     constructor() {}
 
@@ -42,7 +42,7 @@ export class JoiIDevForJoin {
 }
 
 @provide(JOYS.iDevForToken)
-export class JoiIDevForToken {
+export class JoiIDevForToken implements IJoiBuilder<IDevForToken> {
 
     constructor() {}
 

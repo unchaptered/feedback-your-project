@@ -5,7 +5,7 @@ import { Form, SuccessForm, FailureForm } from './classes/dtos/form';
 import { NotFoundException, ConflictException, BadRequestException } from './classes/dtos/error';
 
 // Joi
-import { JoiIDevForJoin, JoiIDevForLogin, JoiIDevForToken } from './classes/services/i.dev.joi';
+import { JoiIDevForJoin, JoiIDevForLogin, JoiIDevForToken } from './classes/services/joy.i.dev';
 
 
 export {

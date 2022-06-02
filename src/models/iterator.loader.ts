@@ -1,6 +1,8 @@
-export function* generator(this: any) {
-    const values = Object.values(this);
+import { generator }  from './iterator/iterator';
 
-    for (const val of values)
-        yield val;
-}
+
+export {
+
+    generator
+
+};
