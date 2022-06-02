@@ -1,8 +1,8 @@
 // Testing Modules
-import { Form, SuccessForm, FailureForm } from '../../../../src/models/class.loader';
+import { Form, SuccessForm, FailureForm } from '../../../../../src/models/class.loader';
 
 // Creator
-import mockCreator from '../../../mock/mock.creator';
+import mockCreator from '../../../../mock/mock.creator';
 
 describe ('Form', () => {
 

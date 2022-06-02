@@ -1,8 +1,8 @@
 // Testing Module
-import { IForm } from '../../../../src/models/interface.loader';
+import { IForm } from '../../../../../src/models/interface.loader';
 
 // Creator
-import mockCreator from '../../../mock/mock.creator';
+import mockCreator from '../../../../mock/mock.creator';
 
 
 describe ('IForm', () => {

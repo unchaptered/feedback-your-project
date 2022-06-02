@@ -1,15 +1,15 @@
 // Testing Module
-import { IPoolConfig } from '../../../../src/models/interface.loader';
+import { IPoolConfig } from '../../../../../src/models/interface.loader';
 
 // Creator
-import mockCreator from '../../../mock/mock.creator';
+import mockCreator from '../../../../mock/mock.creator';
 
 
 describe ('IPoolConfig', () => {
 
     it ('has 6 properties, with iterator', () => {
 
-        const poolConfig: IPoolConfig = mockCreator.iPoolConfig.craeteIPoolConfig();
+        const poolConfig: IPoolConfig = mockCreator.Config.iPoolConfig.craeteIPoolConfig();
 
         expect(poolConfig.HOST).toBeDefined();
         expect(poolConfig.USER).toBeDefined();
