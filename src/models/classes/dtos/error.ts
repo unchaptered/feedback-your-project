@@ -8,10 +8,15 @@ export class NotFoundException implements ICustomException {
     message: string;
     name: string;
 
-    constructor(m: string) {
+    statusCode: number;
 
-        this.message = m;
-        this.name = '404';
+    constructor(message: string) {
+
+        this.message = message;
+        this.name = 'NotFoundException';
+
+        this.statusCode = 404;
+
     }
 
 };
@@ -25,10 +30,14 @@ export class ConflictException implements ICustomException {
     message: string;
     name: string;
 
-    constructor(m: string) {
+    statusCode: number;
 
-        this.message = m;
-        this.name = '404';
+    constructor(message: string) {
+
+        this.message = message;
+        this.name = 'ConflictException';
+
+        this.statusCode = 409;
     }
 }
 
@@ -40,10 +49,14 @@ export class BadRequestException implements ICustomException {
     message: string;
     name: string;
 
-    constructor(m: string) {
+    statusCode: number;
 
-        this.message = m;
-        this.name = '404';
+    constructor(message: string) {
+
+        this.message = message;
+        this.name = 'BadRequestException';
+
+        this.statusCode = 400;
     }
 
 };
