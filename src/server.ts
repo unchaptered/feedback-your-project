@@ -1,16 +1,16 @@
 import { Container } from 'inversify';
 import { InversifyExpressServer } from 'inversify-express-utils';
 
-import * as express from 'express';
-// import { setJson, setUrlencoded } from './base/base.middleware';
+import { json, urlencoded } from 'express';
+
 
 export const createServer = (container: Container): InversifyExpressServer => {
 
     const app = new InversifyExpressServer(container);
 
     app.setConfig((app) => {
-        app.use(express.json());
-        app.use(express.urlencoded({ extended: true }));
+        app.use(json());
+        app.use(urlencoded({ extended: true }));
     });
     
     return app;
