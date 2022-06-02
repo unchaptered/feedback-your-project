@@ -3,7 +3,7 @@ import { Algorithm } from 'jsonwebtoken';
 import { IConfig, ILogConfig, IPoolConfig, ITokenConfig } from '../../interface.loader';
 
 import * as ConfigPrivate from './config.private';
-import * as ObjectIterator from '../iterator';
+import * as ObjectIterator from '../../iterator.loader';
 
 
 export class Config implements IConfig {
