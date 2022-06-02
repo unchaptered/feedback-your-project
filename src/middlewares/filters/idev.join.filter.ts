@@ -6,18 +6,17 @@ import { BaseMiddleware } from 'inversify-express-utils';
 import { ParamsDictionary } from 'express-serve-static-core';
 
 // di
-import { MODULES } from '../../constants/modules.symbol';
-import { FILTERS } from '../../constants/filter.symbol';
+import { MODULES, FILTERS } from '../../constants/constant.loader';
 
 // Dto
-import { IUser } from '../../models/interface.loader';
+import { IDevForJoin } from '../../models/interface.loader';
 
 // Modules
 import { JoiProvider, LoggerProvider, ResponseProvider } from '../../modules/module.loader';
 
 
-@provide(FILTERS.Join)
-export class LoginFilter extends BaseMiddleware {
+@provide(FILTERS.IDevForJoin)
+export class IDevForJoinFilter extends BaseMiddleware {
 
     constructor(
         @inject(MODULES.JoiProvider) private joiProvider: JoiProvider,
@@ -33,15 +32,14 @@ export class LoginFilter extends BaseMiddleware {
         next: express.NextFunction
     ) {
 
-        const user: IUser | Error = await this.joiProvider.validateUser(req?.body);
-        if (user instanceof Error) {
+        const iDev: IDevForJoin | Error = await this.joiProvider.validateIDevForJoin(req?.body);
+        if (iDev instanceof Error) {
 
-            this.logProvider.writeError(user.message);
+            this.logProvider.writeError(iDev.message);
             return res.status(400).json(
-                this.resProvider.getFailureForm(user.message)
-            );
+                this.resProvider.getFailureForm(iDev.message));
         
-        };
+        }
 
         return next();
 

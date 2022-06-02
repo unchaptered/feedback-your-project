@@ -2,26 +2,25 @@ import { ParsedQs } from 'qs';
 import { inject } from 'inversify';
 import * as express from 'express';
 import { provide } from 'inversify-binding-decorators';
-import { BaseMiddleware } from 'inversify-express-utils';
+import { BaseMiddleware, requestBody } from 'inversify-express-utils';
 import { ParamsDictionary } from 'express-serve-static-core';
 
 // di
-import { MODULES } from '../../constants/modules.symbol';
-import { FILTERS } from '../../constants/filter.symbol';
+import { MODULES, FILTERS } from '../../constants/constant.loader';
 
 // Dto
-import { IUserDetail } from '../../models/interface.loader';
+import { IDevForLogin } from '../../models/interface.loader';
 
 // Modules
 import { JoiProvider, LoggerProvider, ResponseProvider } from '../../modules/module.loader';
 
 
-@provide(FILTERS.Join)
-export class JoinFilter extends BaseMiddleware {
+@provide(FILTERS.IDevForLogin)
+export class IDevForLoginFilter extends BaseMiddleware {
 
     constructor(
         @inject(MODULES.JoiProvider) private joiProvider: JoiProvider,
-        @inject(MODULES.LoggerProvider) private loggerProvider: LoggerProvider,
+        @inject(MODULES.LoggerProvider) private logProvider: LoggerProvider,
         @inject(MODULES.ResponseProvider) private resProvider: ResponseProvider
     ) {
         super()
@@ -32,15 +31,14 @@ export class JoinFilter extends BaseMiddleware {
         res: express.Response<any, Record<string, any>>,
         next: express.NextFunction
     ) {
-        
-        const user: IUserDetail | Error = await this.joiProvider.validateUserDetail(req?.body);
-        if (user instanceof Error) {
 
-            this.loggerProvider.writeInfo(user.message);
+        const iDev: IDevForLogin | Error = await this.joiProvider.validateIDevForLogin(req?.body);
+        if (iDev instanceof Error) {
+
+            this.logProvider.writeError(iDev.message);
             return res.status(400).json(
-                this.resProvider.getFailureForm(user.message)
-            );
-        
+                this.resProvider.getFailureForm(iDev.message));
+
         }
 
         return next();
