@@ -1,5 +1,5 @@
 // dtos
-import { IForm } from '../interface.loader';
+import { IForm } from '../../interface.loader';
 
 
 export class Form implements IForm {

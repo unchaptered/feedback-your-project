@@ -1,10 +1,26 @@
-import { Config } from './classes/config';
-import { Form, SuccessForm, FailureForm } from './classes/form';
+import { Config } from './classes/configs/config';
+
+// Dtos
+import { Form, SuccessForm, FailureForm } from './classes/dtos/form';
+import { NotFoundException, ConflictException, BadRequestException } from './classes/dtos/error';
+
+// Joi
+import { JoiIDevForJoin, JoiIDevForLogin, JoiIDevForToken } from './classes/services/i.dev.joi';
+
 
 export {
     Config,
     
     Form,
     SuccessForm,
-    FailureForm
+    FailureForm,
+
+    BadRequestException, // 400
+    ConflictException, // 403
+    NotFoundException, // 404
+
+    JoiIDevForJoin,
+    JoiIDevForLogin,
+    JoiIDevForToken
+
 };

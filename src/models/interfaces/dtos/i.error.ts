@@ -1,0 +1,1 @@
+export interface ICustomException extends Error {}
