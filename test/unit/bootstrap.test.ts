@@ -1,4 +1,4 @@
-import { MODE, runServer } from '../../src/bootstrap';
+import { MODE } from '../../src/bootstrap';
 
 describe ('MODE', () => {
 
