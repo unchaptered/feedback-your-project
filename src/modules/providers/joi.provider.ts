@@ -1,59 +1,56 @@
-import * as Joi from "joi";
+import { inject } from 'inversify';
 import { provide } from 'inversify-binding-decorators';
 
-// di1
-import { MODULES } from '../../constants/modules.symbol';
+// di
+import { JOYS, MODULES } from '../../constants/constant.loader';
 
 // dtos
-import { IUser, IUserDetail } from '../../models/interface.loader';
+import { IDevForJoin, IDevForLogin, IDevForToken } from '../../models/interface.loader';
+import { JoiIDevForLogin, JoiIDevForJoin, JoiIDevForToken } from '../../models/class.loader';
 
 // private
 import * as JoiPrivate from './private/joi.private';
 
-export interface IJoiProvider {
-
-    UserDetailJoi: Joi.ObjectSchema<any>;
-    UserJoi: Joi.ObjectSchema<any>;
-
-}
 
 @provide(MODULES.JoiProvider)
-export class JoiProvider implements IJoiProvider {
+export class JoiProvider  {
 
-    UserDetailJoi: Joi.ObjectSchema<any>;
-    UserJoi: Joi.ObjectSchema<any>;
-
-    constructor() {
-        this.UserDetailJoi = Joi.object({
-            id: Joi.number().min(0),
-            email: Joi.string().min(3).max(30).required(),
-            username: Joi.string().min(3).max(30).required(),
-            password: Joi.string().pattern(new RegExp('^[a-zA-Z0-9]{3,30}$')).required(),
-            passwordConfirm: Joi.string().pattern(new RegExp('^[a-zA-Z0-9]{3,30}$')).required()
-        });
-        this.UserJoi = Joi.object({
-            id: Joi.number().min(0),
-            email: Joi.string().min(3).max(30).required(),
-            password: Joi.string().pattern(new RegExp('^[a-zA-Z0-9]{3,30}$')).required(),
-        });
-    }
+    constructor(
+        @inject(JOYS.iDevForLogin) private joyIDevForLogin: JoiIDevForLogin,
+        @inject(JOYS.iDevForJoin) private joyIDevForJoin: JoiIDevForJoin,
+        @inject(JOYS.iDevForToken) private joiIDevForToken: JoiIDevForToken
+    ) {}
 
     private errHandler = JoiPrivate.errHandler;
 
-    public async validateUserDetail(user: IUserDetail): Promise<IUserDetail | Error> {
+    public async validateIDevForJoin(iDev: IDevForJoin): Promise<IDevForJoin | Error> {
+
         try {
-            return await this.UserDetailJoi.validateAsync({ ...user });
+            return await this.joyIDevForJoin.getInstance().validateAsync({ ...iDev });
         } catch (err) {
             return this.errHandler(err);
-        } 
+        }
+
     }
 
-    public async validateUser(user: IUser): Promise<IUser | Error> {
+    public async validateIDevForLogin(iDev: IDevForLogin): Promise<IDevForLogin | Error> {
+
         try {
-            return await this.UserJoi.validateAsync({ ...user });
+            return await this.joyIDevForLogin.getInstance().validateAsync({ ...iDev });
         } catch (err) {
             return this.errHandler(err);
-        } 
+        }
+
+    }
+
+    public async validateIDevForToken(iDev: IDevForToken): Promise<IDevForToken | Error> {
+
+        try {
+            return await this.joiIDevForToken.getInstance().validateAsync({ ...iDev });
+        } catch (err) {
+            return this.errHandler(err);
+        }
+        
     }
 
 }

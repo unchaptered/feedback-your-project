@@ -1,7 +1,7 @@
 import { provide } from 'inversify-binding-decorators';
 
 // di
-import { MODULES } from '../../constants/modules.symbol';
+import { MODULES } from '../../constants/constant.loader';
 
 // dtos
 import { IForm } from '../../models/interface.loader';
