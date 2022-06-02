@@ -1,4 +1,6 @@
+import 'reflect-metadata';
 import * as Joi from 'joi';
+
 import { provide } from 'inversify-binding-decorators';
 
 
