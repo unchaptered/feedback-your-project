@@ -1,7 +1,8 @@
 import { controller, httpGet, httpPatch, httpPost, httpPut } from 'inversify-express-utils';
 
-// di
-import { PATHS } from '../../constants/paths.enum';
+// Di
+import { PATHS } from '../../constants/constant.loader';
+
 
 @controller(PATHS.Admin)
 export class AdminController {

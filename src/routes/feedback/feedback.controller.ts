@@ -1,7 +1,8 @@
 import { controller, httpGet, httpPost } from 'inversify-express-utils';
 
-// di
-import { PATHS } from '../../constants/paths.enum';
+// Di
+import { PATHS } from '../../constants/constant.loader';
+
 
 @controller(PATHS.Feedback)
 export class FeedbackController {
@@ -13,4 +14,5 @@ export class FeedbackController {
 
     @httpPost('/:id')
     public postFeedbackBySiteId() {}
+    
 }

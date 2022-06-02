@@ -1,48 +1,49 @@
 import 'reflect-metadata';
 import { inject } from 'inversify';
-import { controller, httpGet, httpPost, requestBody } from 'inversify-express-utils';
+import { JsonResult } from 'inversify-express-utils/lib/results';
+import { BaseHttpController, controller, httpGet, httpPost, requestBody } from 'inversify-express-utils';
 
 // di
-import { PATHS } from '../../constants/paths.enum';
-import { MODULES } from '../../constants/modules.symbol';
-import { FILTERS } from '../../constants/filter.symbol';
+import { PATHS, MODULES, FILTERS } from '../../constants/constant.loader';
 
 // dtos
-import { IForm, IUser, IUserDetail } from '../../models/interface.loader';
+import { IDevForJoin, IDevForLogin } from '../../models/interface.loader';
 
 // Providers
-import { JoiProvider, LoggerProvider, ResponseProvider } from '../../modules/module.loader';
+import { LoggerProvider } from '../../modules/module.loader';
 import { HomeService } from './home.service';
 
 
 @controller(PATHS.Home)
-export class HomeController {
+export class HomeController extends BaseHttpController {
 
     constructor(
-        @inject(MODULES.JoiProvider) private joiProvider: JoiProvider,
-        @inject(MODULES.LoggerProvider) private loggerProvider: LoggerProvider,
-        @inject(MODULES.ResponseProvider) private resProvider: ResponseProvider,
-        
-        @inject(MODULES.HomeService) private homeService: HomeService
-    ) {}
+        @inject(MODULES.HomeService) private homeService: HomeService,
+        @inject(MODULES.LoggerProvider) private logProvider: LoggerProvider,
+    ) {
+        super();
+    }
 
     @httpGet('/')
-    public get(): string {
+    public get() {}
 
-        return this.homeService.get();
+    @httpPost('/join', FILTERS.IDevForJoin)
+    public async join(@requestBody() iDev: IDevForJoin): Promise<JsonResult> {
+
+        const [ res, statusCode ] = await this.homeService.join(iDev);
+
+        this.logProvider.write(res.isSuccess, res.message);
+        return this.json(res, statusCode);
+
     }
 
-    @httpPost('/join', FILTERS.Join)
-    public async join(@requestBody() user: IUserDetail): Promise<IForm> {
+    @httpPost('/login', FILTERS.IDevForToken)
+    public async login(@requestBody() iDev: IDevForLogin): Promise<JsonResult> {
 
-        return this.resProvider.getSuccessForm('회원가입에 성공하셨습니다.', user);
+        const [ res, statusCode ] = await this.homeService.login(iDev);
 
-    }
-
-    @httpPost('/login', FILTERS.Login)
-    public async login(@requestBody() user: IUser): Promise<IForm> {
-
-        return this.resProvider.getSuccessForm('로그인에 성공하셨습니다.', user);
+        this.logProvider.write(res.isSuccess, res.message);
+        return this.json(res, statusCode);
 
     }
     

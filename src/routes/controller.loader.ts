@@ -3,4 +3,12 @@ import { AuthController } from './auth/auth.controller';
 import { AdminController } from './admin/admin.controller';
 import { FeedbackController } from './feedback/feedback.controller';
 
-export { HomeController, AuthController, AdminController, FeedbackController };
+
+export {
+
+    HomeController,
+    AuthController,
+    AdminController,
+    FeedbackController
+    
+};
