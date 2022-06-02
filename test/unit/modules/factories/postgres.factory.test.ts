@@ -1,5 +1,5 @@
 import 'reflect-metadata';
-
+import { PoolClient } from 'pg';
 // Testing Module
 import { PostgresFactory } from '../../../../src/modules/factories/postgres.factory';
 
@@ -22,66 +22,51 @@ jest.mock('pg', () => {
     };
 
     return { Pool: jest.fn(() => mockPool )};
-})
+});
+
 
 describe ('PostgresFactory', () => {
-
-    let posFactory: PostgresFactory;
-
-    beforeAll(() => {
-        posFactory = new PostgresFactory();
-    });
-
-    afterEach(() => {
-        jest.clearAllMocks();
-        PostgresFactory.pool = null;
-    });
-
-    describe ('properties', () => {
-
-        it ('2 static value', () => {
-            expect(Object.keys(PostgresFactory).length).toBe(2);
-
-            expect(PostgresFactory.pool).toBeDefined();
-            expect(PostgresFactory.initialize).toBeDefined();
-        });
-
-    });
-
-    describe ('initialize should call 3 private func', () => {
-
-        it ('any should call 3 func', async () => {
-
-            const poolConfig: IPoolConfig = mockCreator.iPoolConfig.craeteIPoolConfig();
-        
-            await PostgresFactory.initialize(poolConfig);
     
-            expect(PostgresPrivate.getOptionInstance).toBeCalledTimes(1);
-            expect(PostgresPrivate.setPoolByOption).toBeCalledTimes(1);
-            expect(PostgresPrivate.isValidPool).toBeCalledTimes(1);
+
+    it ('has 1 static prop', () => expect(Object.keys(PostgresFactory).length).toBe(1));
+    it ('has 0 props', () => {
+        const tmp = new PostgresFactory();
+        expect(Object.keys(tmp).length).toBe(0);
+    });
+    
+
+    describe ('logics', () => {
+
+        let pgFactory: PostgresFactory;
+    
+        beforeAll(() => pgFactory = new PostgresFactory());
+        afterEach(() => jest.clearAllMocks());
+    
+        describe ('static initialize', () => {
+
+            it ('should call 3 private function', async () => {
+
+                const poolConfig: IPoolConfig = mockCreator.Config.iPoolConfig.craeteIPoolConfig();
+        
+                await PostgresFactory.initialize(poolConfig);
+        
+                expect(PostgresPrivate.getOptionInstance).toBeCalledTimes(1);
+                expect(PostgresPrivate.setPoolByOption).toBeCalledTimes(1);
+                expect(PostgresPrivate.isValidPool).toBeCalledTimes(1);
+
+            });
+
+            it ('others return not null', async () => {
+                
+                const poolConfig: IPoolConfig = mockCreator.Config.iPoolConfig.craeteIPoolConfig();
+                const pool: Pool = await PostgresFactory.initialize(poolConfig);
+
+                expect(pool).not.toBeNull();
+
+            });
 
         });
 
     });
 
-    describe ('initialize should return Pool | null', () => {
-
-        it ('undefined return null', async () => {
-
-            const pool: Pool | null = await PostgresFactory.initialize(undefined);
-
-            expect(pool).toBeNull();
-
-        });
-
-        it ('others return not null', async () => {
-            
-            const poolConfig: IPoolConfig = mockCreator.iPoolConfig.craeteIPoolConfig();
-            const pool: Pool | null = await PostgresFactory.initialize(poolConfig);
-
-            expect(pool).toBeNull();
-
-        });
-
-    });
 });

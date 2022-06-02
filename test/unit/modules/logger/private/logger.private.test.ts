@@ -11,7 +11,6 @@ describe ('Logger Private', () => {
 
         expect(LoggerPrivate.getTimeFormat).toBeDefined();
         expect(LoggerPrivate.getStringFormat).toBeDefined();
-        expect(LoggerPrivate.getBaseTrans).toBeDefined();
         expect(LoggerPrivate.getPassTrans).toBeDefined();
         expect(LoggerPrivate.getErrTrans).toBeDefined();
         expect(LoggerPrivate.getWinstonDailyByTransport).toBeDefined();
@@ -41,21 +40,21 @@ describe ('Logger Private', () => {
 
     });
 
-    describe ('getBaseTrans', () => {
+    // describe ('getBaseTrans', () => {
 
-        it ('should return instance, having 3 properties', () => {
+    //     it ('should return instance, having 3 properties', () => {
 
-            const format = LoggerPrivate.getBaseTrans('samples');
+    //         const format = LoggerPrivate.getBaseTrans('samples');
 
-            expect(Object.keys(format).length).toBe(3);
+    //         expect(Object.keys(format).length).toBe(3);
 
-            expect(format?.datePattern).toBeDefined();
-            expect(format?.maxFiles).toBeDefined();
-            expect(format?.zippedArchive).toBeDefined();
+    //         expect(format?.datePattern).toBeDefined();
+    //         expect(format?.maxFiles).toBeDefined();
+    //         expect(format?.zippedArchive).toBeDefined();
 
-        });
+    //     });
 
-    });
+    // });
 
     describe ('getPassTrans / getErrTrans', () => {
        
