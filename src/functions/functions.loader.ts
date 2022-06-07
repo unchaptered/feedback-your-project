@@ -1,5 +1,6 @@
-import { errorHandler } from "./handler/error.handler";
+import { errorHandler, errorParamsHandler } from "./handler/error.handler";
 
 export {
-    errorHandler
+    errorHandler,
+    errorParamsHandler
 };

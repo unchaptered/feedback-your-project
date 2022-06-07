@@ -28,6 +28,7 @@ export class DtoBuilder extends BaseModule implements IDtoBuilder {
         super();
     }
 
+
     /**
      * @throws 'CustomException'
      * @param data: IDev
@@ -37,12 +38,9 @@ export class DtoBuilder extends BaseModule implements IDtoBuilder {
 
         try {
             
-            const dev = new Dev(data);
+            return new Dev(
+                await this.joi.validate(data, Dev.joiObject));
 
-            const devJoi = dev.getJoiObject<Dev>();
-            await this.joi.validate(data, devJoi);
-
-            return dev;
 
         } catch (err) {
 
@@ -60,13 +58,9 @@ export class DtoBuilder extends BaseModule implements IDtoBuilder {
     public async getDevForJoin(data: IDevForJoin): Promise<DevForJoin> {
 
         try {
-
-            const dev = new DevForJoin(data);
-
-            const devJoi = dev.getJoiObject<DevForJoin>();
-            await this.joi.validate(data, devJoi);
             
-            return dev;
+            return new DevForJoin(
+                await this.joi.validate(data, DevForJoin.joiObject));
 
         } catch(err) {
             
@@ -85,12 +79,8 @@ export class DtoBuilder extends BaseModule implements IDtoBuilder {
 
         try {
 
-            const dev = new DevForToken(data);
-
-            const devJoi = dev.getJoiObject<DevForToken>();
-            await this.joi.validate(data, devJoi);
-
-            return dev;
+            return new DevForToken(
+                await this.joi.validate(data, DevForToken.joiObject));
 
         } catch(err) {
             
@@ -108,13 +98,8 @@ export class DtoBuilder extends BaseModule implements IDtoBuilder {
 
         try {
 
-            
-            const dev = new DevForLogin(data);
-
-            const devJoi = dev.getJoiObject<DevForLogin>();
-            await this.joi.validate(data, devJoi);
-
-            return dev;
+            return new DevForLogin(
+                await this.joi.validate(data, DevForLogin.joiObject));
 
         } catch(err) {
             

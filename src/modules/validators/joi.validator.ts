@@ -5,12 +5,13 @@ import { provide } from 'inversify-binding-decorators';
 import { VALIDATORS } from '../../constants/constant.loader';
 
 // Base Module
-import { BaseModule } from '../base/base.modules';
+import { BaseModule, BaseValidator } from '../base/base.modules';
 import { IDev, IDevForJoin, IDevForLogin, IDevForToken } from '../../models/interface.loader';
+import { BadRequestException, CustomException, UnkownServerError } from 'models/class.loader';
 
 
 @provide(VALIDATORS.JoiValidator)
-export class JoiValidator extends BaseModule {
+export class JoiValidator extends BaseValidator {
 
     constructor() {
         super();

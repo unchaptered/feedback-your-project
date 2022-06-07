@@ -1,10 +1,17 @@
 import * as Joi from 'joi';
 
 // Dtos (Interfaces)
-import { IDto, IDev, IDevForJoin, IDevForLogin, IDevForToken } from 'models/interface.loader';
+import { IDev, IDevForJoin, IDevForLogin, IDevForToken } from 'models/interface.loader';
 
 
-export class Dev implements IDev, IDto {
+export class Dev implements IDev {
+
+    static joiObject = Joi.object({
+        id: Joi.number().min(0),
+        name: Joi.string().min(3).max(30).required(),
+        email: Joi.string().min(3).max(50).required(),
+        password: Joi.string().pattern(new RegExp('^[a-zA-Z0-9]{3,30}$')).required()
+    });
 
     id?: number | undefined;
     email: string;
@@ -20,20 +27,16 @@ export class Dev implements IDev, IDto {
 
     }
 
-    getJoiObject<Dev>(): Joi.ObjectSchema<Dev> {
-
-        return Joi.object({
-            id: Joi.number().min(0),
-            name: Joi.string().min(3).max(30).required(),
-            email: Joi.string().min(3).max(50).required(),
-            password: Joi.string().pattern(new RegExp('^[a-zA-Z0-9]{3,30}$')).required()
-        })
-
-    }
-
 }
 
-export class DevForJoin implements IDevForJoin, IDto {
+export class DevForJoin implements IDevForJoin {
+
+    static joiObject = Joi.object({
+        name: Joi.string().min(3).max(30).required(),
+        email: Joi.string().min(3).max(50).required(),
+        password: Joi.string().pattern(new RegExp('^[a-zA-Z0-9]{3,30}$')).required(),
+        passwordConfirm:  Joi.string().pattern(new RegExp('^[a-zA-Z0-9]{3,30}$')).required()
+    });
 
     email: string;
     name: string;
@@ -47,21 +50,15 @@ export class DevForJoin implements IDevForJoin, IDto {
         this.passwordConfirm = iDev.passwordConfirm;
 
     }
-
-    getJoiObject<DevForJoin>(): Joi.ObjectSchema<DevForJoin> {
-
-        return Joi.object({
-            name: Joi.string().min(3).max(30).required(),
-            email: Joi.string().min(3).max(50).required(),
-            password: Joi.string().pattern(new RegExp('^[a-zA-Z0-9]{3,30}$')).required(),
-            passwordConfirm:  Joi.string().pattern(new RegExp('^[a-zA-Z0-9]{3,30}$')).required()
-        });
-
-    }
     
 }
 
-export class DevForLogin implements IDevForLogin, IDto {
+export class DevForLogin implements IDevForLogin {
+
+    static joiObject = Joi.object({
+        email: Joi.string().min(3).max(50).required(),
+        password: Joi.string().pattern(new RegExp('^[a-zA-Z0-9]{3,30}$')).required(),
+    }); 
 
     email: string;
     password: string;
@@ -70,20 +67,16 @@ export class DevForLogin implements IDevForLogin, IDto {
         this.email = iDev.email;
         this.password = iDev.password;
     }
-
-    getJoiObject<DevForLogin>(): Joi.ObjectSchema<DevForLogin> {
-        
-        return Joi.object({
-            email: Joi.string().min(3).max(50).required(),
-            password: Joi.string().pattern(new RegExp('^[a-zA-Z0-9]{3,30}$')).required(),
-        });
-
-    }
-    
     
 }
 
-export class DevForToken implements IDevForToken, IDto {
+export class DevForToken implements IDevForToken {
+
+    static joiObject = Joi.object({
+        id: Joi.number().min(0).required(),
+        email: Joi.string().min(3).max(50).required(),
+        password: Joi.string().pattern(new RegExp('^[a-zA-Z0-9]{3,30}$')).required(),
+    });
 
     id: number;
     email: string;
@@ -94,16 +87,6 @@ export class DevForToken implements IDevForToken, IDto {
         this.id = iDev.id;
         this.email = iDev.email;
         this.password = iDev.password;
-
-    }
-
-    getJoiObject<DevForToken>(): Joi.ObjectSchema<DevForToken> {
-        
-        return Joi.object({
-            id: Joi.number().min(0).required(),
-            email: Joi.string().min(3).max(50).required(),
-            password: Joi.string().pattern(new RegExp('^[a-zA-Z0-9]{3,30}$')).required(),
-        });
 
     }
 
