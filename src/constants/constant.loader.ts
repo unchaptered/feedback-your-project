@@ -1,22 +1,47 @@
-import { I_FILTERS, FILTERS } from './modules/filter.symbol';
-import { I_GUARDS, GUARDS } from './modules/guard.symbol';
-import { I_MODULES, MODULES } from './modules/modules.symbol';
-import { I_JOY, JOYS } from './modules/joi.symbol';
+import { PATHS } from './paths/path.constants'
+import { CLASSES } from './classes/class.constants';
+import {
+    I_CLASSES,
+        I_MIDDLEWARES,
+            I_GUARDS,
+        I_MODULES,
+            I_FACTORIES, I_BUILDERS, I_VALIDATORS, I_PROVIDERS,
+        I_LAYERS,
+            I_CONTROLLERS, I_SERVICES,I_REPOSITORIES
+ } from './classes/i.classes.constants';
 
-import { PATHS } from './routes/paths.enum';
+const GUARDS: I_GUARDS = CLASSES.MIDDLEWARES.GUARDS;
 
+const BUILDERS: I_BUILDERS = CLASSES.MODULES.BUILDERS;
+const FACTORIES: I_FACTORIES = CLASSES.MODULES.FACTORIES;
+const PROVIDERS: I_PROVIDERS = CLASSES.MODULES.PROVIDERS;
+const VALIDATORS: I_VALIDATORS = CLASSES.MODULES.VALIDATORS;
+
+const CONTROLLERS: I_CONTROLLERS = CLASSES.LAYERS.CONTROLLERS;
+const REPOSITORIES: I_REPOSITORIES = CLASSES.LAYERS.REPOSITORIES;
+const SERVICES: I_SERVICES = CLASSES.LAYERS.SERVICES;
 
 export {
-    I_FILTERS,
-    FILTERS,
 
-    I_GUARDS,
-    GUARDS,
+    PATHS,
 
-    I_JOY,
-    JOYS,
+    CLASSES, I_CLASSES,
 
+    // Middlewares
+    I_MIDDLEWARES,
+    GUARDS, I_GUARDS,
+
+    // Modules
     I_MODULES,
-    MODULES,
-    PATHS
+    BUILDERS, I_BUILDERS,
+    FACTORIES, I_FACTORIES,
+    PROVIDERS, I_PROVIDERS,
+    VALIDATORS, I_VALIDATORS,
+
+    // Layers
+    I_LAYERS,
+    CONTROLLERS, I_CONTROLLERS,
+    REPOSITORIES, I_REPOSITORIES,
+    SERVICES, I_SERVICES,
+
 };

@@ -13,7 +13,6 @@ import { IDev, IDevForLogin, IDevForJoin, IDevForToken } from './interfaces/serv
 import { ISite } from './interfaces/services/i.site';
 
 // Joi
-import { IJoiBuilder } from './interfaces/services/i.joi.i.dev';
 
 export {
     
@@ -32,7 +31,5 @@ export {
     IDevForJoin,
     IDevForLogin,
     IDevForToken,
-
-    IJoiBuilder
     
 };

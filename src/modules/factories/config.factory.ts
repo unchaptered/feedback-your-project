@@ -1,16 +1,15 @@
 import { DotenvConfigOptions, DotenvConfigOutput } from 'dotenv';
 import { provide } from 'inversify-binding-decorators';
 
-// di
-import { MODULES } from '../../constants/constant.loader';
-
-// dtos
-import { IConfig } from '../../models/interface.loader';
-
-// private
+// DI Constants
+import { FACTORIES } from '../../constants/constant.loader';
 import * as ConfigPrivate from './private/config.private';
 
-@provide(MODULES.ConfigFactory)
+// Dto (Interfaces)
+import { IConfig } from '../../models/interface.loader';
+
+
+@provide(FACTORIES.ConfigFactory)
 export class ConfigFactory {
     
     static config: IConfig;

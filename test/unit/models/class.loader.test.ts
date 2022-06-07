@@ -4,26 +4,31 @@ import * as CLassLoader from '../../../src/models/class.loader';
 
 describe ('Class Loader', () => {
 
-    it ('has 10 properties', () => {
+    it ('has 14 properties', () => {
+        
+        expect(Object.keys(CLassLoader).length).toBe(14);
 
-        expect(Object.keys(CLassLoader).length).toBe(10);
-
-        // Configs
+        // Config
         expect(CLassLoader.Config).toBeDefined();
 
-        // Dtos
+        // Form
         expect(CLassLoader.Form).toBeDefined();
         expect(CLassLoader.SuccessForm).toBeDefined();
         expect(CLassLoader.FailureForm).toBeDefined();
         
+        // Exception
+        expect(CLassLoader.CustomException).toBeDefined();
         expect(CLassLoader.BadRequestException).toBeDefined();
-        expect(CLassLoader.ConflictException).toBeDefined();
         expect(CLassLoader.NotFoundException).toBeDefined();
+        expect(CLassLoader.ConflictException).toBeDefined();
+        expect(CLassLoader.IntervalServerError).toBeDefined();
+        expect(CLassLoader.UnkownServerError).toBeDefined();
 
-        // Services
-        expect(CLassLoader.JoiIDevForJoin).toBeDefined();
-        expect(CLassLoader.JoiIDevForLogin).toBeDefined();
-        expect(CLassLoader.JoiIDevForToken).toBeDefined();
+        // Dtos
+        expect(CLassLoader.Dev).toBeDefined();
+        expect(CLassLoader.DevForJoin).toBeDefined();
+        expect(CLassLoader.DevForLogin).toBeDefined();
+        expect(CLassLoader.DevForToken).toBeDefined();
 
     });
 

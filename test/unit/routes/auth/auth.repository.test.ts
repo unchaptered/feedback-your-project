@@ -7,8 +7,8 @@ import { AuthRepository } from '../../../../src/routes/repository.loader';
 import { PostgresFactory, DevQueryBuilder, ConfigFactory } from '../../../../src/modules/module.loader';
 
 // Dtos & Creator
-import { IDevForLogin } from '../../../../src/models/interface.loader';
 import mockCreator from '../../../mock/mock.creator';
+import { BaseLayer } from '../../../../src/routes/base/base.layer';
 
 
 describe ('Auth Repository', () => {
@@ -33,8 +33,7 @@ describe ('Auth Repository', () => {
     });
 
 
-    it ('has 2 properties', () => expect(Object.keys(authRepo).length).toBe(2));
+    it ('has 2 properties', () => expect(Object.keys(authRepo).length).toBe(3));
     it ('has 1 function', () => expect(authRepo.publishToken).toBeDefined());
-
-
+    it ('extends BaseLayer', () => expect(authRepo).toBeInstanceOf(BaseLayer));
 });

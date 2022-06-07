@@ -6,7 +6,6 @@ Basically, you can use many `Form Service`, such as Google Form.
 
 But, user's view, It's not good to press a other URL to feedback yours.
 
-
 **SO**, I want to Open Feedback API Service.
 
 **What if** your feedback using axios in the following way?

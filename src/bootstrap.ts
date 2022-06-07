@@ -5,7 +5,7 @@ import { Container } from 'inversify';
 import { InversifyExpressServer } from 'inversify-express-utils';
 
 // Constatns to inject as class
-import { MODULES, FILTERS, GUARDS, JOYS } from './constants/constant.loader';
+import { CLASSES } from './constants/constant.loader';
 
 // Dto
 import { IConfig, ITokenConfig } from './models/interface.loader';
@@ -36,7 +36,7 @@ export const runServer = async (MODE: string): Promise<Server | null> => {
         const token: ITokenConfig = await TokenFactory.initialize(conf?.TOKEN_CONF);
         const logger: winston.Logger = LoggerProvider.initialize(conf?.LOG_CONF?.DIR);
 
-        const container: Container = createContainer(MODULES, FILTERS, GUARDS, JOYS);
+        const container: Container = createContainer(CLASSES);
         const serverContainer: InversifyExpressServer = createServer(container);
 
         server = serverContainer.build().listen(conf?.PORT, () => {

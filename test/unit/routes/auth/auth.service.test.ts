@@ -3,13 +3,10 @@ import { QueryResult } from 'pg';
 
 // Testing Module
 import { AuthService } from '../../../../src/routes/service.loader';
+import { BaseLayer } from '../../../../src/routes/base/base.layer';
+
 import { AuthRepository } from '../../../../src/routes/repository.loader';
 import { TokenFactory, ResponseProvider, DevQueryBuilder, PostgresFactory } from '../../../../src/modules/module.loader';
-
-// Dtos & Creator
-import { IDevForToken } from '../../../../src/models/interface.loader';
-import { BadRequestException, FailureForm, NotFoundException, SuccessForm } from '../../../../src/models/class.loader';
-import mockCreator from '../../../mock/mock.creator';
 
 
 describe ('Auth Service', () => {
@@ -30,7 +27,8 @@ describe ('Auth Service', () => {
 
     });
 
-    it ('has 3 properties', () => expect(Object.keys(authService).length).toBe(3));
+    it ('has 3 properties', () => expect(Object.keys(authService).length).toBe(4));
     it ('has 1 function', () => expect(authService.publishToken).toBeDefined());
+    it ('extends BaseLayer', () => expect(authService).toBeInstanceOf(BaseLayer));
     
 });

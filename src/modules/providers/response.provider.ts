@@ -1,20 +1,15 @@
 import { provide } from 'inversify-binding-decorators';
 
-// di
-import { MODULES } from '../../constants/constant.loader';
+// DI Constants
+import { PROVIDERS } from '../../constants/constant.loader';
+import { IResponseProvider } from './interfaces/i.response.providers';
 
-// dtos
+// Dtos (Classes & Interfaces)
 import { IForm } from '../../models/interface.loader';
 import { SuccessForm, FailureForm } from '../../models/class.loader';
 
-interface IResponseProvider {
 
-    getSuccessForm: Function;
-    getFailureForm: Function;
-    
-}
-
-@provide(MODULES.ResponseProvider)
+@provide(PROVIDERS.ResponseProvider)
 export class ResponseProvider implements IResponseProvider {
 
     public getSuccessForm(message: string, data:Object): IForm {

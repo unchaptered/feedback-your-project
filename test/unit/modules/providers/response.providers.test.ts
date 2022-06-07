@@ -2,6 +2,7 @@ import 'reflect-metadata';
 
 // Testing Module
 import { ResponseProvider } from '../../../../src/modules/providers/response.provider';
+import { BaseModule } from '../../../../src/modules/base/base.modules';
 
 // Dto & Creator
 import { FailureForm, SuccessForm } from '../../../../src/models/class.loader';

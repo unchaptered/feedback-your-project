@@ -1,4 +1,8 @@
 import 'reflect-metadata';
+import { BaseHttpController } from 'inversify-express-utils';
+
+// Testing Module
+import { BaseController } from '../../../../src/routes/base/base.controller';
 import { AdminController }  from '../../../../src/routes/controller.loader';
 
 describe ('Admin Controller', () => {
@@ -11,7 +15,7 @@ describe ('Admin Controller', () => {
     
     it ('has 8 func', () => {
         
-        expect(Object.keys(adminController).length).toBe(0);
+        expect(Object.keys(adminController).length).toBe(1);
 
         expect(adminController.getAdminByOptions).toBeDefined();
         expect(adminController.postAdminData).toBeDefined();
@@ -21,6 +25,13 @@ describe ('Admin Controller', () => {
         expect(adminController.postFeedbackForm).toBeDefined();
         expect(adminController.putFeedbackForm).toBeDefined();
         expect(adminController.patchFeedbackForm).toBeDefined();
+
+    });
+
+    it ('extends BaseController, BaseHttpController', () => {
+
+        expect(adminController).toBeInstanceOf(BaseController);
+        expect(adminController).toBeInstanceOf(BaseHttpController);
 
     });
     

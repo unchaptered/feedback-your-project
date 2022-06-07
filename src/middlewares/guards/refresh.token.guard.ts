@@ -1,26 +1,24 @@
 import { ParsedQs } from 'qs';
 import { inject } from 'inversify';
-import { JwtPayload } from 'jsonwebtoken';
 import * as express from 'express';
 import { provide } from 'inversify-binding-decorators';
 import { BaseMiddleware } from 'inversify-express-utils';
 import { ParamsDictionary } from 'express-serve-static-core';
 
 // di
-import { GUARDS, MODULES } from '../../constants/constant.loader';
+import { GUARDS, FACTORIES, PROVIDERS } from '../../constants/constant.loader';
 
 // modules
 import { LoggerProvider, ResponseProvider, TokenFactory } from '../../modules/module.loader';
-import { string } from 'joi';
 
 
-@provide(GUARDS.refreshToken)
+@provide(GUARDS.RefreshTokenGuard)
 export class RefreshTokenGuard extends BaseMiddleware {
 
     constructor(
-        @inject(MODULES.LoggerProvider) private logProvider: LoggerProvider,
-        @inject(MODULES.ResponseProvider) private resProvider: ResponseProvider,
-        @inject(MODULES.TokenFactory) private tokenFactory: TokenFactory
+        @inject(PROVIDERS.LoggerProvider) private logProvider: LoggerProvider,
+        @inject(PROVIDERS.ResponseProvider) private resProvider: ResponseProvider,
+        @inject(FACTORIES.TokenFactory) private tokenFactory: TokenFactory
     ) {
         super()
     }

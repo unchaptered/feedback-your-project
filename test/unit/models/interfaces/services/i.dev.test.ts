@@ -14,10 +14,12 @@ describe ('IDev', () => {
 
 
     beforeAll(() => {
+
         iDev = mockCreator.Service.iDev.createIDev(3);
         iDevForJoin = mockCreator.Service.iDev.createIDevForJoin();
         iDevForLogin = mockCreator.Service.iDev.createIDevForLogin();
-        iDevForToken = mockCreator.Service.iDev.createIDevForToken(true, 3);
+        iDevForToken = mockCreator.Service.iDev.createIDevForToken(3);
+
     });
 
     it ('IDev has 4 properties', () => expect(Object.keys(iDev).length).toBe(4));

@@ -1,13 +1,18 @@
 import { controller, httpGet, httpPost } from 'inversify-express-utils';
 
-// Di
+// DI Constatns
 import { PATHS } from '../../constants/constant.loader';
+
+// Classes (Layer & Modules)
+import { BaseController } from '../base/base.controller';
 
 
 @controller(PATHS.Feedback)
-export class FeedbackController {
+export class FeedbackController extends BaseController {
 
-    constructor() {}
+    constructor() {
+        super();
+    }
     
     @httpGet('/:id')
     public getFeedbackBySiteId() {}

@@ -6,7 +6,7 @@ import { createContainer } from '../../src/container';
 import { createServer } from '../../src/server';
 
 // Symbol Constants
-import { MODULES, FILTERS, GUARDS, JOYS } from '../../src/constants/constant.loader';
+import { CLASSES } from '../../src/constants/constant.loader';
 
 
 describe('createServer', () => {
@@ -17,7 +17,7 @@ describe('createServer', () => {
 
     it ('Container return InversifyExpressServer', () => {
 
-        const container = createContainer(MODULES, FILTERS, GUARDS, JOYS);
+        const container = createContainer(CLASSES);
         const server = createServer(container);
 
         expect(server instanceof InversifyExpressServer).toBeTruthy();
