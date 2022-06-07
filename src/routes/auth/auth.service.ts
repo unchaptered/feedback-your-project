@@ -1,42 +1,47 @@
 import { inject } from 'inversify';
 import { provide } from 'inversify-binding-decorators';
 
-// di
-import { MODULES } from '../../constants/constant.loader';
+// DI Constants
+import { SERVICES, REPOSITORIES, FACTORIES, PROVIDERS } from '../../constants/constant.loader';
 
-// Dtos
-import { IDevForToken, IForm } from '../../models/interface.loader';
-import { BadRequestException, NotFoundException } from '../../models/class.loader';
-
-// Providers
-import { ResponseProvider, TokenFactory } from '../../modules/module.loader';
+// Classes (Layer & Modules)
+import { BaseLayer } from '../base/base.layer';
 import { AuthRepository } from '../repository.loader';
+import { ResponseProvider, TokenFactory } from '../../modules/module.loader';
+
+// Dtos (classes & interfaces)
+import { DevForToken } from '../../models/class.loader';
 
 
-@provide(MODULES.AuthService)
-export class AuthService {
+@provide(SERVICES.AuthService)
+export class AuthService extends BaseLayer {
 
     constructor(
-        // @inject(MODULES.HomeRepository) private homeRepository: HomeRepository,
-        @inject(MODULES.AuthRepository) private authRepository: AuthRepository,
-        @inject(MODULES.TokenFactory) private tokenFactory: TokenFactory,
-        @inject(MODULES.ResponseProvider) private resProvider: ResponseProvider
-    ) {}
+        // Layers
+        @inject(REPOSITORIES.AuthRepository) private authRepository: AuthRepository,
+        // Modules
+        @inject(FACTORIES.TokenFactory) private tokenFactory: TokenFactory,
+        @inject(PROVIDERS.ResponseProvider) private resProvider: ResponseProvider
+    ) {
+        super();
+    }
 
-    public async publishToken(iDev: IDevForToken): Promise<[IForm, number]> {
+    public async publishToken(iDev: DevForToken): Promise<string[]> {
 
-        const accessToken = this.tokenFactory.getAccessToken();
-        const refreshToken = this.tokenFactory.getRefreshToken({ email: iDev.email });
+        try {
 
-        const res = await this.authRepository.publishToken(iDev, refreshToken);
+            const accessToken = this.tokenFactory.getAccessToken();
+            const refreshToken = this.tokenFactory.getRefreshToken({ email: iDev.email });
 
-        if (res instanceof Error) return [ this.resProvider.getFailureForm(res.message), 500 ];
+            await this.authRepository.publishToken(iDev, refreshToken);
+            
+            return [ accessToken, refreshToken ];
 
-        else if (res instanceof NotFoundException) return [ this.resProvider.getFailureForm(res.message), 404 ];
+        } catch (err) {
 
-        else if (res instanceof BadRequestException) return [ this.resProvider.getFailureForm(res.message), 400 ];
+            throw this.errorHandler(err);
 
-        else return [ this.resProvider.getSuccessForm('토큰이 발행되었습니다.', { accessToken, refreshToken }), 201 ];
+        }
 
     }
     

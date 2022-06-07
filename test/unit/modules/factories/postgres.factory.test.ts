@@ -15,6 +15,7 @@ jest.spyOn(PostgresPrivate, 'isValidPool');
 
 // Mocking
 import { Pool } from 'pg';
+import { BaseModule } from '../../../../src/modules/base/base.modules';
 jest.mock('pg', () => {
     const mockPool = {
         connect: jest.fn(() => mockCreator.pool.createPoolClient()),
@@ -28,10 +29,18 @@ jest.mock('pg', () => {
 describe ('PostgresFactory', () => {
     
 
-    it ('has 1 static prop', () => expect(Object.keys(PostgresFactory).length).toBe(1));
-    it ('has 0 props', () => {
-        const tmp = new PostgresFactory();
-        expect(Object.keys(tmp).length).toBe(0);
+    describe ('properties', () => {
+      
+        it ('has 1 static function', () => expect(Object.keys(PostgresFactory).length).toBe(1));
+        it ('has 1 public function', () => {
+
+            const tmp = new PostgresFactory();
+            
+            expect(Object.keys(tmp).length).toBe(1);
+            
+        });
+        it ('extedns BaseModule', () => expect(new PostgresFactory()).toBeInstanceOf(BaseModule));  
+
     });
     
 

@@ -1,18 +1,19 @@
 import { Pool, PoolClient, PoolConfig } from 'pg';
 import { provide } from 'inversify-binding-decorators';
 
-// di
-import { MODULES } from '../../constants/constant.loader';
-
-// dto
-import { IPoolConfig } from '../../models/interface.loader';
-
-// private
+// DI Constants
+import { FACTORIES } from '../../constants/constant.loader';
+import { BaseModule } from '../../modules/base/base.modules';
+import { IPostgresFactory } from './interfaces/i.postgres.factory';
 import * as PostgresPrivate from './private/postgres.private';
 
+// Dto (Claesses, Interfaces)
+import { IPoolConfig } from '../../models/interface.loader';
+import { CustomException, IntervalServerError, UnkownServerError } from '../../models/class.loader';
 
-@provide(MODULES.PostgresFactory)
-export class PostgresFactory {
+
+@provide(FACTORIES.PostgresFactory)
+export class PostgresFactory extends BaseModule implements IPostgresFactory {
 
     static pool: Pool;
 
@@ -28,7 +29,7 @@ export class PostgresFactory {
 
     }
 
-    public async getClient(): Promise<PoolClient | Error> {
+    public async getClient(): Promise<PoolClient | CustomException> {
 
         try {
            
@@ -36,8 +37,7 @@ export class PostgresFactory {
 
         } catch(err) {
 
-            if (err instanceof Error) return err;
-            else return new Error('UnkwonError is occured : ' + JSON.stringify(err));
+            return this.errorHandler(err);
 
         }
 

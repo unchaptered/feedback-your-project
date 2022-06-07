@@ -2,36 +2,36 @@ import { inject } from 'inversify';
 import { QueryResult } from 'pg';
 import { provide } from 'inversify-binding-decorators';
 
-// di
-import { MODULES } from '../../constants/constant.loader';
+// DI Constatns
+import { REPOSITORIES, BUILDERS, FACTORIES } from '../../constants/constant.loader';
 
-// Dtos
-import { IDevForLogin, IDevForToken } from '../../models/interface.loader';
-import { BadRequestException, NotFoundException } from '../../models/class.loader';
-
-// Providers
+// Classes (Layer & Modules)
+import { BaseLayer } from '../base/base.layer';
 import { DevQueryBuilder, PostgresFactory } from '../../modules/module.loader';
 
+// Dtos (Classes)
+import {
+    CustomException, BadRequestException, NotFoundException,
+    DevForToken
+} from '../../models/class.loader';
 
-@provide(MODULES.AuthRepository)
-export class AuthRepository {
+
+@provide(REPOSITORIES.AuthRepository)
+export class AuthRepository extends BaseLayer{
 
     constructor(
-        @inject(MODULES.DevQueryBuilder) private devQuery: DevQueryBuilder,
-        @inject(MODULES.PostgresFactory) private pgFactory: PostgresFactory
-    ) {}
-
-    private errHandler(err: unknown): Error {
-        if (err instanceof Error) return err;
-        else return new Error('Unkwon Error : ' + JSON.stringify(err));
+        // Modules
+        @inject(BUILDERS.DevQueryBuilder) private devQuery: DevQueryBuilder,
+        @inject(FACTORIES.PostgresFactory) private pgFactory: PostgresFactory
+    ) {
+        super();
     }
-    
-    public async publishToken(iDev: IDevForToken, token: string): Promise<QueryResult | Error | NotFoundException | BadRequestException> {
 
-        console.log('helo');
+    
+    public async publishToken(iDev: DevForToken, token: string): Promise<QueryResult> {
 
         const client = await this.pgFactory.getClient();
-        if (client instanceof Error) return client;
+        if (client instanceof CustomException) throw client;
 
         const findQuery: string = this.devQuery.isExistsByEamil(iDev.email);
         const loginQuery = this.devQuery.login({ email: iDev.email, password:iDev.password });
@@ -70,11 +70,12 @@ export class AuthRepository {
             client.release();
 
             return saveToken;
+
         } catch (err) {
             client.query('ROLLBACK;');
             client.release();
             
-            return this.errHandler(err);
+            throw this.errorHandler(err);
         }
 
     }

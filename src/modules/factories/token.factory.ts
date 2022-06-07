@@ -1,17 +1,17 @@
 import * as jwt from 'jsonwebtoken';
+import { provide } from 'inversify-binding-decorators';
 import { JwtPayload, NotBeforeError, TokenExpiredError, JsonWebTokenError} from 'jsonwebtoken';
 
-import { provide } from 'inversify-binding-decorators';
+// DI Constnats
+import { FACTORIES } from '../../constants/constant.loader';
 
-// di
-import { MODULES } from '../../constants/constant.loader';
-
-// dtos
+// Dtos (Interfaces)
 import { ITokenConfig } from '../../models/interface.loader';
-import { instanceOfIHttpActionResult } from 'inversify-express-utils';
+import { ITokenFactory } from './interfaces/i.token.factory';
 
-@provide(MODULES.TokenFactory)
-export class TokenFactory {
+
+@provide(FACTORIES.TokenFactory)
+export class TokenFactory implements ITokenFactory {
 
     static tokenConfig: ITokenConfig;
 

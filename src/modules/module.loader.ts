@@ -1,17 +1,18 @@
-// Logger Module
-import { LoggerProvider } from './logger/logger.provider';
+// Builders
+import { DevQueryBuilder } from './builders/dev,query.builder';
+import { DtoBuilder } from './builders/dto.builder';
 
-// Factories Modules
+// Factories
 import { TokenFactory } from './factories/token.factory';
 import { ConfigFactory } from './factories/config.factory';
 import { PostgresFactory } from './factories/postgres.factory';
 
-// Query Builder with PostgresFactory
-import { DevQueryBuilder } from './builder/dev,query.builder';
-
-// Provide Modules
-import { JoiProvider } from './providers/joi.provider';
+// Provides
+import { LoggerProvider } from './providers/logger.provider';
 import { ResponseProvider } from './providers/response.provider';
+
+// Validators
+import { JoiValidator } from './validators/joi.validator';
 
 
 export {
@@ -21,9 +22,11 @@ export {
     PostgresFactory,
 
     DevQueryBuilder,
+    DtoBuilder,
     
-    JoiProvider,
     LoggerProvider,
     ResponseProvider,
+    
+    JoiValidator,
     
 };

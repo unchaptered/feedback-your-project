@@ -1,24 +1,19 @@
 import { Container } from 'inversify';
 
 // Constants
-import { I_MODULES, I_FILTERS, I_GUARDS, I_JOY } from './constants/constant.loader';
+import { I_CLASSES } from './constants/constant.loader';
 
 // Providers
 import {
-    TokenFactory, ConfigFactory, PostgresFactory,// Factorries
-    DevQueryBuilder, // Builders
-    LoggerProvider, ResponseProvider, JoiProvider, // Providers
+    DevQueryBuilder, DtoBuilder,                    // Builders
+    TokenFactory, ConfigFactory, PostgresFactory,   // Factorries
+    LoggerProvider, ResponseProvider,               // Providers
+    JoiValidator                                    // Validators
 } from './modules/module.loader';
-
-// Validators
-import {
-    JoiIDevForJoin, JoiIDevForLogin, JoiIDevForToken // Validators
-} from './models/class.loader';
 
 // Middlewares
 import { 
     AccessTokenGuard, RefreshTokenGuard, // Guards
-    IDevForJoinFilter, IDevForLoginFilter, IDevForTokenFilter // Filters
 } from './middlewares/middleware.loader';
 
 // Layers
@@ -27,43 +22,43 @@ import { AuthRepository, HomeRepository } from './routes/repository.loader';
 
 
 
-export const createContainer = (MODULES: I_MODULES, FILTERS: I_FILTERS, GUARDS: I_GUARDS, JOYS: I_JOY): Container => {
+export const createContainer = (CLASSES: I_CLASSES): Container => {
 
     const con = new Container();
 
+    const {
+        MIDDLEWARES: { GUARDS },
+        LAYERS: { CONTROLLERS, REPOSITORIES, SERVICES },
+        MODULES: { BUILDERS, FACTORIES, PROVIDERS, VALIDATORS }
+    } = CLASSES;
+
     // Guards
 
-    con.bind<AccessTokenGuard>(GUARDS.accessToken).to(AccessTokenGuard);
-    con.bind<RefreshTokenGuard>(GUARDS.refreshToken).to(RefreshTokenGuard);
+    con.bind<AccessTokenGuard>(GUARDS.AccessTokenGuard).to(AccessTokenGuard);
+    con.bind<RefreshTokenGuard>(GUARDS.RefreshTokenGuard).to(RefreshTokenGuard);
 
-    // Modules
+    // Modules - Factories
+    con.bind<TokenFactory>(FACTORIES.TokenFactory).to(TokenFactory);
+    con.bind<ConfigFactory>(FACTORIES.ConfigFactory).to(ConfigFactory);
+    con.bind<PostgresFactory>(FACTORIES.PostgresFactory).to(PostgresFactory);
 
-    con.bind<TokenFactory>(MODULES.TokenFactory).to(TokenFactory);
-    con.bind<ConfigFactory>(MODULES.ConfigFactory).to(ConfigFactory);
-    con.bind<PostgresFactory>(MODULES.PostgresFactory).to(PostgresFactory);
+    // Modules - Builders
+    con.bind<DevQueryBuilder>(BUILDERS.DevQueryBuilder).to(DevQueryBuilder);
+    con.bind<DtoBuilder>(BUILDERS.DtoBuilder).to(DtoBuilder);
 
-    con.bind<DevQueryBuilder>(MODULES.DevQueryBuilder).to(DevQueryBuilder);
+    // Modules - Validators
+    con.bind<JoiValidator>(VALIDATORS.JoiValidator).to(JoiValidator);
+
+    // Modules - Providers
+    con.bind<LoggerProvider>(PROVIDERS.LoggerProvider).to(LoggerProvider);
+    con.bind<ResponseProvider>(PROVIDERS.ResponseProvider).to(ResponseProvider);
+
+    // Layers
+    con.bind<HomeService>(SERVICES.HomeService).to(HomeService);
+    con.bind<AuthService>(SERVICES.AuthService).to(AuthService);
     
-    con.bind<JoiProvider>(MODULES.JoiProvider).to(JoiProvider);
-    con.bind<LoggerProvider>(MODULES.LoggerProvider).to(LoggerProvider);
-    con.bind<ResponseProvider>(MODULES.ResponseProvider).to(ResponseProvider);
-
-    // Filters
-    con.bind<IDevForJoinFilter>(FILTERS.IDevForJoin).to(IDevForJoinFilter);
-    con.bind<IDevForLoginFilter>(FILTERS.IDevForLogin).to(IDevForLoginFilter);
-    con.bind<IDevForTokenFilter>(FILTERS.IDevForToken).to(IDevForTokenFilter);
-
-    // Jois
-    con.bind<JoiIDevForJoin>(JOYS.iDevForJoin).to(JoiIDevForJoin);
-    con.bind<JoiIDevForLogin>(JOYS.iDevForLogin).to(JoiIDevForLogin);
-    con.bind<JoiIDevForToken>(JOYS.iDevForToken).to(JoiIDevForToken);
-
-    // Layer
-    con.bind<HomeService>(MODULES.HomeService).to(HomeService);
-    con.bind<AuthService>(MODULES.AuthService).to(AuthService);
-    
-    con.bind<HomeRepository>(MODULES.HomeRepository).to(HomeRepository);
-    con.bind<AuthRepository>(MODULES.AuthRepository).to(AuthRepository);
+    con.bind<HomeRepository>(REPOSITORIES.HomeRepository).to(HomeRepository);
+    con.bind<AuthRepository>(REPOSITORIES.AuthRepository).to(AuthRepository);
 
     return con;
 

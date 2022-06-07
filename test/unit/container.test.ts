@@ -5,14 +5,14 @@ import { Container } from 'inversify';
 import { createContainer } from '../../src/container';
 
 // Symbol Constants
-import { MODULES, FILTERS, GUARDS, JOYS } from '../../src/constants/constant.loader';
+import { CLASSES } from '../../src/constants/constant.loader';
 
 
 describe('creaetContainer', () => {
 
     it ('I_MODULES return Container', () => {
 
-        const container = createContainer(MODULES, FILTERS, GUARDS, JOYS);
+        const container = createContainer(CLASSES);
 
         expect(container instanceof Container).toBeTruthy();
 

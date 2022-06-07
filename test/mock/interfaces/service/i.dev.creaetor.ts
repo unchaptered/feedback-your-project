@@ -47,10 +47,10 @@ export const createIDevForLogin = (isValid: boolean = true): IDevForLogin => {
 
 };
 
-export const createIDevForToken = (isValid: boolean = true, id?: number): IDevForToken => {
+export const createIDevForToken = (id: number, isValid: boolean = true): IDevForToken => {
 
     return {
-        id: id ?? faker.random.number(),
+        id,
         email: isValid
                 ? faker.internet.email().substring(1, 10)
                 : faker.internet.email().substring(1, 1),

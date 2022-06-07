@@ -1,3 +1,6 @@
+import * as Joi from 'joi';
+
+
 export interface IDev {
 
     id?: number;

@@ -9,11 +9,11 @@ import { IForm } from './interfaces/dtos/i.form';
 import { ICustomException } from './interfaces/dtos/i.error';
 
 // Dtos for Layer Providers
+import { IDto } from './interfaces/services/i.dto';
 import { IDev, IDevForLogin, IDevForJoin, IDevForToken } from './interfaces/services/i.dev';
 import { ISite } from './interfaces/services/i.site';
 
 // Joi
-import { IJoiBuilder } from './interfaces/services/i.joi.i.dev';
 
 export {
     
@@ -26,13 +26,12 @@ export {
 
     ICustomException,
 
+    IDto,
     IDev,
     ISite,
 
     IDevForJoin,
     IDevForLogin,
     IDevForToken,
-
-    IJoiBuilder
     
 };

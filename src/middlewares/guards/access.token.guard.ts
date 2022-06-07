@@ -6,19 +6,19 @@ import { BaseMiddleware } from 'inversify-express-utils';
 import { ParamsDictionary } from 'express-serve-static-core';
 
 // di
-import { GUARDS, MODULES } from '../../constants/constant.loader';
+import { GUARDS, FACTORIES, PROVIDERS } from '../../constants/constant.loader';
 
 // modules
 import { LoggerProvider, ResponseProvider, TokenFactory } from '../../modules/module.loader';
 
 
-@provide(GUARDS.accessToken)
+@provide(GUARDS.AccessTokenGuard)
 export class AccessTokenGuard extends BaseMiddleware {
 
     constructor(
-        @inject(MODULES.LoggerProvider) private logProvider: LoggerProvider,
-        @inject(MODULES.ResponseProvider) private resProvider: ResponseProvider,
-        @inject(MODULES.TokenFactory) private tokenFactory: TokenFactory
+        @inject(PROVIDERS.LoggerProvider) private logProvider: LoggerProvider,
+        @inject(PROVIDERS.ResponseProvider) private resProvider: ResponseProvider,
+        @inject(FACTORIES.TokenFactory) private tokenFactory: TokenFactory
     ) {
         super()
     }

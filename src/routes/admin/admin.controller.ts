@@ -1,13 +1,18 @@
 import { controller, httpGet, httpPatch, httpPost, httpPut } from 'inversify-express-utils';
 
-// Di
+// DI Constants
 import { PATHS } from '../../constants/constant.loader';
+
+// Classes (Layer & Modules)
+import { BaseController } from '../base/base.controller';
 
 
 @controller(PATHS.Admin)
-export class AdminController {
+export class AdminController extends BaseController {
 
-    constructor() {}
+    constructor() {
+        super();
+    }
 
     // 등록된 관리자 확인
     @httpGet('')

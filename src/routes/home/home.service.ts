@@ -1,52 +1,53 @@
 import { inject } from 'inversify';
 import { provide } from 'inversify-binding-decorators';
 
-// di
-import { MODULES } from '../../constants/constant.loader';
+// DI Constatns
+import { SERVICES, REPOSITORIES } from '../../constants/constant.loader';
 
-//dto
-import { IDevForJoin, IDevForLogin, IForm } from '../../models/interface.loader';
-import { BadRequestException, ConflictException, NotFoundException } from '../../models/class.loader';
-
-// provider
+// Classes (Layer & Modules)
+import { BaseLayer } from '../base/base.layer';
 import { HomeRepository } from './home.repository';
-import { ResponseProvider } from '../../modules/module.loader';
+
+// Dtos (Classes & Interfaces)
+import { QueryResult } from 'pg';
+import { DevForJoin, DevForLogin } from '../../models/class.loader';
 
 
-@provide(MODULES.HomeService)
-export class HomeService {
+@provide(SERVICES.HomeService)
+export class HomeService extends BaseLayer {
 
     constructor(
-        @inject(MODULES.HomeRepository) private homeRepository: HomeRepository,
-        @inject(MODULES.ResponseProvider) private resProvider: ResponseProvider
-    ) {}
-
-    public async join(iDev: IDevForJoin): Promise<[IForm, number]> {
-
-        const res = await this.homeRepository.join(iDev);
-        
-        if (res instanceof Error)
-            return [
-                this.resProvider.getFailureForm(res.message),
-                isNaN(+res.name) ? 500 : +res.name];
-
-        else
-            return [
-                this.resProvider.getSuccessForm('회원가입에 성공하셨습니다.', iDev),
-                201];
+        @inject(REPOSITORIES.HomeRepository) private homeRepository: HomeRepository
+    ) {
+        super();
     }
 
-    public async login(iDev: IDevForLogin): Promise<[IForm, number]> {
+    public async join(iDev: DevForJoin): Promise<QueryResult> {
 
-        const res = await this.homeRepository.login(iDev);
+         try {
 
-        if (res instanceof Error) return [ this.resProvider.getFailureForm(res.message), 500];
+            return await this.homeRepository.join(iDev);
 
-        else if (res instanceof NotFoundException) return [ this.resProvider.getFailureForm(res.message), 404];
+         } catch(err) {
 
-        else if (res instanceof BadRequestException) return [ this.resProvider.getFailureForm(res.message), 400];
+            throw this.errorHandler(err);
+
+         }
         
-        else return [this.resProvider.getSuccessForm('로그인에 성공하셨습니다.', res.rows[0]), 201];
+    }
+
+    public async login(iDev: DevForLogin): Promise<QueryResult> {
+
+
+        try {
+            
+            return await this.homeRepository.login(iDev);
+
+        } catch (err) {
+
+            throw this.errorHandler(err);
+            
+        }
         
     }
 

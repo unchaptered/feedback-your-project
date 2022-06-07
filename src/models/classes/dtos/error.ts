@@ -1,22 +1,26 @@
 import { ICustomException } from '../../interface.loader';
 
+export class CustomException implements ICustomException {
+
+    name: string;
+    message: string;
+    statusCode: number;
+
+
+    constructor(name: string, message: string, statusCode: number) {
+        this.name = name;
+        this.message = message;
+        this.statusCode = statusCode;
+    }
+
+};
 /**
  * 404 NotFound
  */
-export class NotFoundException implements ICustomException {
-
-    message: string;
-    name: string;
-
-    statusCode: number;
+export class NotFoundException extends CustomException {
 
     constructor(message: string) {
-
-        this.message = message;
-        this.name = 'NotFoundException';
-
-        this.statusCode = 404;
-
+        super('NotFoundException', message, 404);
     }
 
 };
@@ -25,38 +29,45 @@ export class NotFoundException implements ICustomException {
 /**
  * 409 Conflict
  */
-export class ConflictException implements ICustomException {
-
-    message: string;
-    name: string;
-
-    statusCode: number;
+export class ConflictException extends CustomException {
 
     constructor(message: string) {
 
-        this.message = message;
-        this.name = 'ConflictException';
+        super('ConflictException', message, 409);
 
-        this.statusCode = 409;
     }
-}
+};
 
 /**
  * 400 BadRequest
  */
-export class BadRequestException implements ICustomException {
-
-    message: string;
-    name: string;
-
-    statusCode: number;
+export class BadRequestException extends CustomException {
 
     constructor(message: string) {
 
-        this.message = message;
-        this.name = 'BadRequestException';
+        super('BadRequestException', message, 400);
 
-        this.statusCode = 400;
+    }
+
+};
+
+export class IntervalServerError extends CustomException {
+
+
+    constructor(message: string) {
+
+        super('IntervalServerError', message, 500);
+
+    }
+
+};
+
+export class UnkownServerError extends CustomException {
+
+    constructor(message: string) {
+
+        super('UnkownServerError', message, 500);
+
     }
 
 };
