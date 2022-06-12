@@ -5,8 +5,8 @@
  */
 export interface ILoggerProvider {
 
-    write(isSuccess: boolean, message: string): void;
-    writeInfo(message: string): void;
-    writeError(message: string): void;
+    write(isSuccess: boolean, ip: string, message: string): void;
+    writeInfo(ip: string, message: string): void;
+    writeError(ip: string, message: string): void;
 
 }
