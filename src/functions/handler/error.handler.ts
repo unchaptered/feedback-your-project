@@ -1,6 +1,6 @@
 import { BadRequestException, CustomException, IntervalServerError, UnkownServerError } from '../../models/class.loader';
 
-export const errorHandler = (err: unknown) => {
+export const errorHandler = (err: unknown): CustomException => {
 
     if (err instanceof CustomException) return err;
     else if (err instanceof Error) return new IntervalServerError(err.message);
@@ -8,7 +8,7 @@ export const errorHandler = (err: unknown) => {
 
 }
 
-export const errorParamsHandler = (err: unknown) => {
+export const errorParamsHandler = (err: unknown): CustomException => {
 
     if (err instanceof CustomException) return err;
     else if (err instanceof Error) return new BadRequestException(err.message);
