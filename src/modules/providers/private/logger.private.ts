@@ -3,7 +3,7 @@ import * as winstonDaily from 'winston-daily-rotate-file';
 
 export const getTimeFormat = (): winston.Logform.Format => winston.format.timestamp({ format: 'YY-MM-DD HH-mm' });
 
-export const getStringFormat = (): winston.Logform.Format => winston.format.printf(info => `${info.timestamp} # ${info.level} # ${info.message}`);
+export const getStringFormat = (): winston.Logform.Format => winston.format.printf(info => `$${info.timestamp} # ${info.level} # ${info.message}`);
 
 export const getPassTrans = (logDir: string): winstonDaily.DailyRotateFileTransportOptions => {
     return {
