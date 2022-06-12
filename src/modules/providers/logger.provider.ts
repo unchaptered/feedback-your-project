@@ -33,19 +33,19 @@ export class LoggerProvider implements ILoggerProvider {
 
     }
 
-    public write(isSuccess: boolean, message: string) {
+    public write(isSuccess: boolean, ip: string, message: string) {
 
-        if (isSuccess) this.writeInfo(message);
-        else this.writeError(message);
+        if (isSuccess) this.writeInfo(ip, message);
+        else this.writeError(ip, message);
         
     }
 
-    public writeInfo(message: string) {
-        LoggerProvider?.logger?.info(message);
+    public writeInfo(ip:string, message: string) {
+        LoggerProvider?.logger?.info(`${ip} : ${message}`);
     }
 
-    public writeError(message: string) {
-        LoggerProvider?.logger?.error(message);
+    public writeError(ip:string, message: string) {
+        LoggerProvider?.logger?.error(`${ip} : ${message}`);
     }
 
 }
