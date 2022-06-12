@@ -42,19 +42,16 @@ export class AuthController extends BaseController {
 
             const [ accessToken, refreshToken ] = await this.authService.publishToken(dto);
             
+            this.logProvider.writeInfo(this.getIp(), '토큰 발행에 성공했습니다.');
             return this.json(
                 this.resProvider.getSuccessForm('토큰 발행에 성공하였습니다.', { accessToken, refreshToken }),
                 201);
-         
-            
-            // const [ res, statusCode ] = await this.authService.publishToken(iDev);
-
-            // this.logProvider.write(res.isSuccess, res.message);
-            // return this.json(res, statusCode);
 
         } catch (err) {
 
             const result: CustomException = this.errorHandler(err);
+
+            this.logProvider.writeError(this.getIp(), `${result.name} : ${result.message}`);
             return this.json(
                 this.resProvider.getFailureForm(`${result.name} : ${result.message}`),
                 result.statusCode);

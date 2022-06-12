@@ -12,7 +12,7 @@ import { HomeService } from './home.service';
 import { DtoBuilder,  LoggerProvider, ResponseProvider } from '../../modules/module.loader';
 
 // Dtos (Classes & Interfaces)
-import { CustomException } from '../../models/class.loader';
+import { CustomException, UnkownServerError } from '../../models/class.loader';
 import { IDevForJoin, IDevForLogin } from '../../models/interface.loader';
 
 
@@ -39,22 +39,24 @@ export class HomeController extends BaseController {
 
         try {
 
+            console.log(this.getIp());
+            
             const dto = await this.dtoBuilder.getDevForJoin(iDev);
             const result = await this.homeService.join(dto);
 
-            if (result.rowCount > 0) // INSERT 문의 rowCounts 가 0 보다 커야한다.
-                return this.json(
-                    this.resProvider.getSuccessForm('회원가입이 성공하였습니다.', iDev),
-                    201);
+            // INSERT 문의 rowCounts 가 0 보다 커야한다.
+            if (result.rowCount > 0) {
 
-            else
-                return this.json(
-                    this.resProvider.getFailureForm('알 수 없는 에러가 발생하였습니다.'),
-                    500);
+                this.logProvider.writeInfo(this.getIp(), `회원가입에 성공하였습니다.`);
+                return this.json( this.resProvider.getSuccessForm('회원가입이 성공하였습니다.', iDev), 201);
+
+            } else throw new UnkownServerError('알 수 없는 에러가 발생하였습니다.');
 
         } catch (err) {
             
             const result: CustomException = this.errorHandler(err);
+
+            this.logProvider.writeError(this.getIp(), `${result.name} : ${result.message}`);
             return this.json(
                 this.resProvider.getFailureForm(`${result.name} : ${result.message}`),
                 result.statusCode);
@@ -71,19 +73,19 @@ export class HomeController extends BaseController {
             const dto = await this.dtoBuilder.getDevForLogin(iDev);
             const result = await this.homeService.login(dto);
 
-            if (result.rowCount > 0) // SELECT 문의 rowCounts 가 0 보다 커야한다.
-                return this.json(
-                    this.resProvider.getSuccessForm('로그인이 성공하였습니다.', result.rows[0]),
-                    201);
+            // SELECT 문의 rowCounts 가 0 보다 커야한다.
+            if (result.rowCount > 0)  {
 
-            else
-                return this.json(
-                    this.resProvider.getFailureForm('알 수 없는 에러가 발생하였습니다.'), 
-                    500);
+                this.logProvider.writeInfo(this.getIp(), '로그인에 성공하였습니다.');
+                return this.json( this.resProvider.getSuccessForm('로그인이 성공하였습니다.', result.rows[0]), 201);
+
+            } else throw new UnkownServerError('알 수 없는 에러가 발생하였습니다.');
 
         } catch (err) {
 
             const result: CustomException = this.errorHandler(err);
+
+            this.logProvider.writeError(this.getIp(), `${result.name} : ${result.message}`);
             return this.json(
                     this.resProvider.getFailureForm(`${result.name} : ${result.message}`),
                     result.statusCode);
