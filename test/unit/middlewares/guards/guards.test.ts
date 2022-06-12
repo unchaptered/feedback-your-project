@@ -1,4 +1,5 @@
 import 'reflect-metadata';
+import * as faker from 'faker';
 import * as jwt from 'jsonwebtoken';
 import { Request, Response, NextFunction } from 'express';
 import { BaseMiddleware } from 'inversify-express-utils';
@@ -29,33 +30,34 @@ describe ('Token Guard', () => {
             mockCreator.Config.iTokenConfig.createITokenConf()
         );
     });
+
     // Mocking
     beforeEach(() => {
+        jest.useFakeTimers();
         req = createRequest();
         res = createResponse();
         next = jest.fn();
 
         logProvider = new LoggerProvider();
-        logProvider.writeError = jest.fn();
-        logProvider.writeInfo = jest.fn();
+            logProvider.write = jest.fn();
+            logProvider.writeError = jest.fn();
+            logProvider.writeInfo = jest.fn();
         
         resProvider = new ResponseProvider();
-        resProvider.getFailureForm = jest.fn();
-        resProvider.getSuccessForm = jest.fn();
+            resProvider.getFailureForm = jest.fn();
+            resProvider.getSuccessForm = jest.fn();
 
         tokenFactory = new TokenFactory();
-        tokenFactory.verifyToken = jest.fn((token: string) => {
-            const { tokenConfig } = TokenFactory;
+            tokenFactory.verifyToken = jest.fn((token: string) => {
+                const { tokenConfig } = TokenFactory;
 
-            try {
-                return jwt.verify(token, tokenConfig.SECRET, { complete: true });
-            } catch(err) {
-                return new Error('Teste Error : ');
-            }
-        });
+                try {
+                    return jwt.verify(token, tokenConfig.SECRET, { complete: true });
+                } catch(err) {
+                    return new Error('Teste Error : ');
+                }
+            });
     });
-
-    beforeEach(() => jest.useFakeTimers());
     afterEach(() => {
         jest.runAllTimers()
         jest.clearAllMocks();
@@ -74,10 +76,14 @@ describe ('Token Guard', () => {
 
     describe ('logics', () => {
 
+        let requestIp: string;
+
         describe ('AccessTokenGuards', () => {
 
             beforeEach(() => {
+                requestIp = faker.internet.ip();
                 accessTokenGuard = new AccessTokenGuard(logProvider, resProvider, tokenFactory);
+                accessTokenGuard.getIp = jest.fn(() => requestIp);
             });
 
             it ('IF no-token, server should return 400', () => {
@@ -87,7 +93,7 @@ describe ('Token Guard', () => {
 
                 const message = '엑세스 토큰이 누락되었습니다.';
                 expect(logProvider.writeError).toBeCalled();
-                expect(logProvider.writeError).toBeCalledWith(message);
+                expect(logProvider.writeError).toBeCalledWith(requestIp, message);
                 expect(resProvider.getFailureForm).toBeCalled();
                 expect(resProvider.getFailureForm).toBeCalledWith(message);
 
@@ -100,14 +106,14 @@ describe ('Token Guard', () => {
 
                 const wrongSecret = 'secret_keys';
                 const wrongToken = jwt.sign({}, wrongSecret);
-
+                
                 req.headers.authorization = 'Bearer ' + wrongToken;
                 accessTokenGuard.handler(req, res, next);
                 expect(res.statusCode).toBe(403);
 
                 const message = new Error('Teste Error : ').message;
                 expect(logProvider.writeError).toBeCalled();
-                expect(logProvider.writeError).toBeCalledWith(message);
+                expect(logProvider.writeError).toBeCalledWith(requestIp, message);
                 expect(resProvider.getFailureForm).toBeCalled();
                 expect(resProvider.getFailureForm).toBeCalledWith(message);
 
@@ -141,7 +147,9 @@ describe ('Token Guard', () => {
         describe ('RefreshTokenGuards', () => {
 
             beforeEach(() => {
+                requestIp = faker.internet.ip();
                 refreshTokenGuard = new RefreshTokenGuard(logProvider, resProvider, tokenFactory);
+                refreshTokenGuard.getIp = jest.fn(() => requestIp);
             });
 
             it ('IF no-token, server should return 400', async () => {
@@ -151,7 +159,7 @@ describe ('Token Guard', () => {
 
                 const message = '엑세스 토큰과 리프레시 토큰이 모두 필요합니다.';
                 expect(logProvider.writeError).toBeCalled();
-                expect(logProvider.writeError).toBeCalledWith(message);
+                expect(logProvider.writeError).toBeCalledWith(requestIp, message);
                 expect(resProvider.getFailureForm).toBeCalled();
                 expect(resProvider.getFailureForm).toBeCalledWith(message);
 
@@ -174,7 +182,7 @@ describe ('Token Guard', () => {
 
                 const message = new Error('Teste Error : ').message;
                 expect(logProvider.writeError).toBeCalled();
-                expect(logProvider.writeError).toBeCalledWith(message + '토큰을 처음부터 다시 발행해주세요.');
+                expect(logProvider.writeError).toBeCalledWith(requestIp, message + '토큰을 처음부터 다시 발행해주세요.');
                 expect(resProvider.getFailureForm).toBeCalled();
                 expect(resProvider.getFailureForm).toBeCalledWith(message + '토큰을 처음부터 다시 발행해주세요.');
 

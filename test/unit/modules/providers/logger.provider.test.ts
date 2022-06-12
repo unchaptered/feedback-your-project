@@ -1,5 +1,5 @@
 import 'reflect-metadata';
-import { BaseModule } from '../../../../src/modules/base/base.modules';
+import * as faker from 'faker';
 
 // Testing Module
 import { LoggerProvider } from '../../../../src/modules/module.loader';
@@ -9,11 +9,17 @@ describe ('Logger Provider', () => {
 
     let logProvider: LoggerProvider;
 
+    let requestIp: string;
+    let logMessage: string;
+
     beforeAll(() => {
 
         LoggerProvider.initialize('samples');
 
         logProvider = new LoggerProvider();
+
+        requestIp = faker.internet.ip();
+        logMessage = 'message';
 
     });
 
@@ -50,18 +56,18 @@ describe ('Logger Provider', () => {
 
         it ('writeInfo should call Provider.logger.info', () => {
             
-            logProvider.writeInfo('success');
+            logProvider.writeInfo(requestIp, logMessage);
             expect(LoggerProvider.logger.info).toBeCalled();
-            expect(LoggerProvider.logger.info).toBeCalledWith('success');
+            expect(LoggerProvider.logger.info).toBeCalledWith(`${requestIp} : ${logMessage}`);
 
         });
 
         
         it ('writeError should call Provider.logger.info', () => {
             
-            logProvider.writeError('success');
+            logProvider.writeError(requestIp, logMessage);
             expect(LoggerProvider.logger.error).toBeCalled();
-            expect(LoggerProvider.logger.error).toBeCalledWith('success');
+            expect(LoggerProvider.logger.error).toBeCalledWith(`${requestIp} : ${logMessage}`);
             
         });
 
@@ -77,19 +83,19 @@ describe ('Logger Provider', () => {
             });
             
             it ('should calll this.writeInfo', () => {
-                logProvider.write(true, 'message');
+                logProvider.write(true, requestIp, logMessage);
                 expect(logProvider.writeInfo).toBeCalled();
                 expect(logProvider.writeError).not.toBeCalled();
 
-                expect(logProvider.writeInfo).toBeCalledWith('message');
+                expect(logProvider.writeInfo).toBeCalledWith(requestIp, logMessage);
             });
 
             it ('should call this.writeError', () => {
-                logProvider.write(false, 'message');
+                logProvider.write(false, requestIp, logMessage);
                 expect(logProvider.writeInfo).not.toBeCalled();
                 expect(logProvider.writeError).toBeCalled();
 
-                expect(logProvider.writeError).toBeCalledWith('message');
+                expect(logProvider.writeError).toBeCalledWith(requestIp, logMessage);
             });
 
         });

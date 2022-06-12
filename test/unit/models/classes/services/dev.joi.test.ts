@@ -19,7 +19,7 @@ describe ('Dev', () => {
         expect(dev.name).toBeDefined();
         expect(dev.password).toBeDefined();
     
-        expect(dev.getJoiObject).toBeDefined();
+        expect(Dev.joiObject).toBeDefined();
     
     });
     
@@ -35,7 +35,7 @@ describe ('Dev', () => {
         expect(dev.password).toBeDefined();
         expect(dev.passwordConfirm).toBeDefined();
     
-        expect(dev.getJoiObject).toBeDefined();
+        expect(DevForJoin.joiObject).toBeDefined();
     
     });
     
@@ -49,7 +49,7 @@ describe ('Dev', () => {
         expect(dev.email).toBeDefined();
         expect(dev.password).toBeDefined();
     
-        expect(dev.getJoiObject).toBeDefined();
+        expect(DevForLogin.joiObject).toBeDefined();
     
     });
     
@@ -65,7 +65,7 @@ describe ('Dev', () => {
         expect(dev.email).toBeDefined();
         expect(dev.password).toBeDefined();
     
-        expect(dev.getJoiObject).toBeDefined();
+        expect(DevForToken.joiObject).toBeDefined();
     
     });
 
