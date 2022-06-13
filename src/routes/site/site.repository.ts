@@ -15,13 +15,12 @@ import {
     SiteForPost, SiteForPut, SiteUrl, IntervalServerError, ConflictException, BadRequestException } from '../../models/class.loader';
 
 
-@provide(REPOSITORIES.AdminRepository)
-export class AdminRepository extends BaseLayer {
+@provide(REPOSITORIES.SiteRepository)
+export class SiteRepository extends BaseLayer {
 
     constructor(
         // Modules
         @inject(BUILDERS.SiteQueryBuilder) private siteQuery: SiteQueryBuilder,
-        // @inject(BUILDERS.siteQueryBuilder) private siteQuery: siteQueryBuilder,
         @inject(FACTORIES.PostgresFactory) private pgFactory: PostgresFactory,
         @inject(BUILDERS.DtoBuilder) private dtoBuilder: DtoBuilder
     ) {

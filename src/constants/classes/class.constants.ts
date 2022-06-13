@@ -5,16 +5,16 @@ export const CLASSES: I_CLASSES = {
         CONTROLLERS: {
             HomeController: Symbol.for('HomeController'),
             AuthController: Symbol.for('AuthController'),
-            AdminController: Symbol.for('AdminController'),
+            SiteController: Symbol.for('SiteController'),
             FeedbackController: Symbol.for('FeedbackController')
         },
         REPOSITORIES: {
-            AdminRepository: Symbol.for('AdminRepository'),
+            SiteRepository: Symbol.for('SiteRepository'),
             AuthRepository: Symbol.for('AuthRepository'),
             HomeRepository: Symbol.for('HomeRepository')
         },
         SERVICES: {
-            AdminService: Symbol.for('AdminService'),
+            SiteService: Symbol.for('SiteService'),
             AuthService: Symbol.for('AuthService'),
             HomeService: Symbol.for('HomeService')
         }

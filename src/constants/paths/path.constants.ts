@@ -1,6 +1,6 @@
 export enum PATHS {
     Home = '',
     Auth = '/auth',
-    Admin = '/admin',
+    Site = '/site',
     Feedback ='/feedback'
 }

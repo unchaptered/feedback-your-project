@@ -17,8 +17,8 @@ import {
 } from './middlewares/middleware.loader';
 
 // Layers
-import { AdminService, AuthService, HomeService } from './routes/service.loader';
-import { AdminRepository, AuthRepository, HomeRepository } from './routes/repository.loader';
+import { AuthService, HomeService, SiteService } from './routes/service.loader';
+import { AuthRepository, HomeRepository, SiteRepository } from './routes/repository.loader';
 
 
 
@@ -57,11 +57,11 @@ export const createContainer = (CLASSES: I_CLASSES): Container => {
     // Layers
     con.bind<HomeService>(SERVICES.HomeService).to(HomeService);
     con.bind<AuthService>(SERVICES.AuthService).to(AuthService);
-    con.bind<AdminService>(SERVICES.AdminService).to(AdminService);
+    con.bind<SiteService>(SERVICES.SiteService).to(SiteService);
     
     con.bind<HomeRepository>(REPOSITORIES.HomeRepository).to(HomeRepository);
     con.bind<AuthRepository>(REPOSITORIES.AuthRepository).to(AuthRepository);
-    con.bind<AdminRepository>(REPOSITORIES.AdminRepository).to(AdminRepository);
+    con.bind<SiteRepository>(REPOSITORIES.SiteRepository).to(SiteRepository);
 
     return con;
 

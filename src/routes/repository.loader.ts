@@ -1,11 +1,11 @@
 import { HomeRepository } from './home/home.repository';
 import { AuthRepository } from './auth/auth.repository';
-import { AdminRepository } from './admin/admin.repository';
+import { SiteRepository } from './site/site.repository';
 
 export {
 
     HomeRepository,
     AuthRepository,
-    AdminRepository
+    SiteRepository
 
 };

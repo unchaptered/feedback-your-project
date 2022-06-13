@@ -43,16 +43,16 @@ export interface I_CLASSES {
         export interface I_CONTROLLERS {
             HomeController: symbol,
             AuthController: symbol,
-            AdminController: symbol,
+            SiteController: symbol,
             FeedbackController: symbol,
         }
         export interface I_SERVICES {
             HomeService: symbol,
             AuthService: symbol
-            AdminService: symbol,
+            SiteService: symbol,
         };
         export interface I_REPOSITORIES {
             HomeRepository: symbol,
             AuthRepository: symbol,
-            AdminRepository: symbol,
+            SiteRepository: symbol,
         };

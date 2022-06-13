@@ -7,7 +7,7 @@ import { BUILDERS, GUARDS, PATHS, PROVIDERS, SERVICES } from '../../constants/co
 
 // Classes (Layer & Modules)
 import { BaseController } from '../base/base.controller';
-import { AdminService } from '../service.loader';
+import { SiteService } from '../service.loader';
 import { DtoBuilder, LoggerProvider, ResponseProvider } from '../../modules/module.loader';
 
 // Dtos (Classes & Interfaces)
@@ -16,12 +16,12 @@ import { CustomException, UnkownServerError } from '../../models/class.loader';
 
 
 
-@controller(PATHS.Admin)
-export class AdminController extends BaseController {
+@controller(PATHS.Site)
+export class SiteController extends BaseController {
 
     constructor(
         // Layer
-        @inject(SERVICES.AdminService) private adminService: AdminService,
+        @inject(SERVICES.SiteService) private siteService: SiteService,
         // Modules
         @inject(BUILDERS.DtoBuilder) private dtoBuilder: DtoBuilder,
         @inject(PROVIDERS.LoggerProvider) private logProvider: LoggerProvider,
@@ -42,7 +42,7 @@ export class AdminController extends BaseController {
 
             const dto = await this.dtoBuilder.getSiteForPost(iSite);
 
-            const result = await this.adminService.postSite(dto);
+            const result = await this.siteService.postSite(dto);
 
             if (result.rowCount === 0) throw new UnkownServerError('알 수 없는 이유로 등록에 실패하였습니다.');
             else {
@@ -85,7 +85,7 @@ export class AdminController extends BaseController {
             const siteUrl = await this.dtoBuilder.getSiteUrl({ url });
             const siteForPut = await this.dtoBuilder.getSiteForPut(after);
 
-            const result = await this.adminService.putSite(siteUrl, siteForPut);
+            const result = await this.siteService.putSite(siteUrl, siteForPut);
 
             return this.json(
                 this.resProvider.getSuccessForm('사이트 수정에 성공하였습니다.', {}), 201);
@@ -113,7 +113,7 @@ export class AdminController extends BaseController {
         try {
             
             const dto = await this.dtoBuilder.getSiteUrl(iSite);
-            this.adminService.disableSite(dto);
+            this.siteService.disableSite(dto);
             
             return this.json('hello', 201);
 

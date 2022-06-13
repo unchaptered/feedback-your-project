@@ -6,19 +6,19 @@ import { REPOSITORIES, SERVICES } from '../../constants/constant.loader';
 
 // Classes (Layer & Modules)
 import { BaseLayer } from '../base/base.layer';
-import { AdminRepository } from '../repository.loader';
+import { SiteRepository } from '../repository.loader';
 
 // Dtos (Classes)
 import { QueryResult } from 'pg';
 import { SiteForPost, SiteForPut, SiteUrl } from '../../models/class.loader';
 
 
-@provide(SERVICES.AdminService)
-export class AdminService extends BaseLayer {
+@provide(SERVICES.SiteService)
+export class SiteService extends BaseLayer {
 
     constructor(
         // Layer
-        @inject(REPOSITORIES.AdminRepository) private adminRepository: AdminRepository
+        @inject(REPOSITORIES.SiteRepository) private siteRepository: SiteRepository
     ) {
         super();
     }
@@ -27,7 +27,7 @@ export class AdminService extends BaseLayer {
 
         try {
 
-            return await this.adminRepository.postSite(iSite);
+            return await this.siteRepository.postSite(iSite);
 
         } catch(err) {
 
@@ -41,7 +41,7 @@ export class AdminService extends BaseLayer {
 
         try {
 
-            return await this.adminRepository.putSite(siteUrl, siteForPut);
+            return await this.siteRepository.putSite(siteUrl, siteForPut);
             
         } catch(err) {
 
@@ -51,7 +51,7 @@ export class AdminService extends BaseLayer {
     }
 
     public disableSite(iSite: SiteUrl) {
-        this.adminRepository.disableSite(iSite);
+        this.siteRepository.disableSite(iSite);
     }
 
 }

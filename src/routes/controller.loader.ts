@@ -1,6 +1,6 @@
 import { HomeController } from './home/home.controller';
 import { AuthController } from './auth/auth.controller';
-import { AdminController } from './admin/admin.controller';
+import { SiteController } from './site/site.controller';
 import { FeedbackController } from './feedback/feedback.controller';
 
 
@@ -8,7 +8,7 @@ export {
 
     HomeController,
     AuthController,
-    AdminController,
+    SiteController,
     FeedbackController
     
 };
