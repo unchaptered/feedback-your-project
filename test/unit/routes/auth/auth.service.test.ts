@@ -2,10 +2,8 @@ import 'reflect-metadata';
 import { QueryResult } from 'pg';
 
 // Testing Module
-import { AuthService } from '../../../../src/routes/service.loader';
 import { BaseLayer } from '../../../../src/routes/base/base.layer';
-
-import { AuthRepository } from '../../../../src/routes/repository.loader';
+import { AuthService, AuthRepository } from '../../../../src/routes/layer.loader';
 import { TokenFactory, ResponseProvider, DevQueryBuilder, PostgresFactory } from '../../../../src/modules/module.loader';
 
 

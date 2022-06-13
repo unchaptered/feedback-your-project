@@ -4,9 +4,9 @@ import * as CLassLoader from '../../../src/models/class.loader';
 
 describe ('Class Loader', () => {
 
-    it ('has 14 properties', () => {
+    it ('has 19 properties', () => {
         
-        expect(Object.keys(CLassLoader).length).toBe(14);
+        expect(Object.keys(CLassLoader).length).toBe(19);
 
         // Config
         expect(CLassLoader.Config).toBeDefined();

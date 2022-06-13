@@ -15,8 +15,5 @@ export const createISite = (): ISite => {
 
         description: faker.commerce.productDescription(),
 
-        // dummy token 으로 교체해야함
-        tokenValue: faker.commerce.productDescription(),
-
     }
 }

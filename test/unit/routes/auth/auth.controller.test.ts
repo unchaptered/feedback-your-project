@@ -2,11 +2,8 @@ import 'reflect-metadata';
 import { BaseHttpController } from 'inversify-express-utils';
 
 // Testing Module
-import { AuthController } from '../../../../src/routes/controller.loader';
 import { BaseController } from '../../../../src/routes/base/base.controller';
-
-import { AuthRepository } from '../../../../src/routes/repository.loader';
-import { AuthService } from '../../../../src/routes/service.loader';
+import { AuthController, AuthRepository, AuthService } from '../../../../src/routes/layer.loader';
 import { DevQueryBuilder, DtoBuilder, JoiValidator, LoggerProvider, PostgresFactory, ResponseProvider, TokenFactory } from '../../../../src/modules/module.loader';
 
 

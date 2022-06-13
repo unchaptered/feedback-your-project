@@ -2,11 +2,8 @@ import 'reflect-metadata';
 import { BaseHttpController } from 'inversify-express-utils';
 
 // Testing Module
-import { HomeController } from '../../../../src/routes/controller.loader';
 import { BaseController } from '../../../../src/routes/base/base.controller';
-
-import { HomeRepository } from '../../../../src/routes/repository.loader';
-import { HomeService } from '../../../../src/routes/service.loader';
+import { HomeController, HomeRepository, HomeService } from '../../../../src/routes/layer.loader';
 import { DevQueryBuilder, DtoBuilder, JoiValidator, LoggerProvider, PostgresFactory, ResponseProvider } from '../../../../src/modules/module.loader';
 
 

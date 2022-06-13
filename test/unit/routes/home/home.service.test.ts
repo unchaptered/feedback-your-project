@@ -1,10 +1,8 @@
 import 'reflect-metadata';
 
 // Testing Module
-import { HomeService } from '../../../../src/routes/service.loader';
 import { BaseLayer } from '../../../../src/routes/base/base.layer';
-
-import { HomeRepository } from '../../../../src/routes/repository.loader';
+import { HomeService, HomeRepository } from '../../../../src/routes/layer.loader';
 import { DevQueryBuilder, PostgresFactory } from '../../../../src/modules/module.loader';
 
 

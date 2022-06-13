@@ -1,7 +1,7 @@
 import 'reflect-metadata';
 
 // Testing Module
-import { AuthRepository } from '../../../../src/routes/repository.loader';
+import { AuthRepository } from '../../../../src/routes/layer.loader';
 
 // Providers
 import { PostgresFactory, DevQueryBuilder, ConfigFactory } from '../../../../src/modules/module.loader';

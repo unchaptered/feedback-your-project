@@ -3,7 +3,8 @@ import { BaseHttpController } from 'inversify-express-utils';
 
 // Testing Module
 import { BaseController } from '../../../../src/routes/base/base.controller';
-import { FeedbackController }  from '../../../../src/routes/controller.loader';
+import { FeedbackController }  from '../../../../src/routes/layer.loader';
+
 
 describe ('Feedback Controller', () => {
 

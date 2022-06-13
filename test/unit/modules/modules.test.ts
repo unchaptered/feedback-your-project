@@ -4,9 +4,9 @@ import * as ModuleLoader from '../../../src/modules/module.loader';
 
 describe ('Class Loader', () => {
 
-    it ('has 10 properties', () => {
+    it ('has 9 properties', () => {
 
-        expect(Object.keys(ModuleLoader).length).toBe(8);
+        expect(Object.keys(ModuleLoader).length).toBe(9);
         
         // Builders
         expect(ModuleLoader.DevQueryBuilder).toBeDefined();

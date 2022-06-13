@@ -3,9 +3,9 @@ import * as ConstantLoader from '../../../src/constants/constant.loader';
 
 describe ('Constant Loader', () => {
 
-    it ('has 10 properties', () => {
+    it ('has 11 properties', () => {
 
-        expect(Object.keys(ConstantLoader).length).toBe(10);
+        expect(Object.keys(ConstantLoader).length).toBe(11);
 
         // Paths
         expect(ConstantLoader.PATHS).toBeDefined();
