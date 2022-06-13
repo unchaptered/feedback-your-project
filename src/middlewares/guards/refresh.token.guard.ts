@@ -54,17 +54,7 @@ export class RefreshTokenGuard extends BaseMiddleware implements IMiddleware {
             );
         }
 
-        
-        const { payload: { email } } = result;
-        const newAccessToken = this.tokenFactory.getAccessToken();
-
-        this.logProvider.writeInfo(this.getIp(), '엑세스 토큰이 재발행 되었습니다.' + JSON.stringify(email));
-        return res.status(201).json(
-            this.resProvider.getSuccessForm('엑세스 토큰이 재발행 되었습니다.' + JSON.stringify(email), {
-                accessToken: newAccessToken,
-                refreshToken
-            })
-        );
+        next();
     
     }
 
