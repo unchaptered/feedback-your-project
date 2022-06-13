@@ -23,6 +23,18 @@ export class TokenFactory implements ITokenFactory {
 
     }
 
+    /**
+     * 
+     * @param `string`
+     * @returns `token.split('Bearer ')[1]`
+     */
+    public extract(token: Array<any> | string | undefined): string | undefined {
+
+        if (token instanceof Array) return token[0]?.split('Bearer ')[1];
+        else return token?.split('Bearer ')[1];
+
+    }
+
     public getAccessToken(): string {
         
 
