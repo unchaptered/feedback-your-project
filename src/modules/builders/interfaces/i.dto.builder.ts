@@ -1,5 +1,9 @@
-import { Dev, DevForJoin, DevForLogin, DevForToken } from '../../../models/class.loader';
-import { IDev, IDevForJoin, IDevForLogin, IDevForToken } from '../../../models/interface.loader';
+import {
+    Dev, DevForJoin, DevForLogin, DevForToken,
+    Site, SiteForPost, SiteForPut, SiteUrl } from '../../../models/class.loader';
+import {
+    IDev, IDevForJoin, IDevForLogin, IDevForToken,
+    ISite, ISiteForPost, ISiteForPut, ISiteUrl } from '../../../models/interface.loader';
 
 
 /**
@@ -14,5 +18,9 @@ export interface IDtoBuilder {
     getDevForToken(d: IDevForToken): Promise<DevForToken>;
     getDevForLogin(d: IDevForLogin): Promise<DevForLogin>;
 
-
+    getSite(s: ISite): Promise<Site>;
+    getSiteUrl(data: ISiteUrl): Promise<SiteUrl>;
+    getSiteForPost(s: ISiteForPost): Promise<SiteForPost>;
+    getSiteForPut(data: ISiteForPut): Promise<SiteForPut>;
+    
 }

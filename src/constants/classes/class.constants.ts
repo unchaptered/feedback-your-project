@@ -9,10 +9,12 @@ export const CLASSES: I_CLASSES = {
             FeedbackController: Symbol.for('FeedbackController')
         },
         REPOSITORIES: {
+            AdminRepository: Symbol.for('AdminRepository'),
             AuthRepository: Symbol.for('AuthRepository'),
             HomeRepository: Symbol.for('HomeRepository')
         },
         SERVICES: {
+            AdminService: Symbol.for('AdminService'),
             AuthService: Symbol.for('AuthService'),
             HomeService: Symbol.for('HomeService')
         }
@@ -31,6 +33,7 @@ export const CLASSES: I_CLASSES = {
         },
         BUILDERS: {
             DevQueryBuilder: Symbol.for('DevQueryBuilder'),
+            SiteQueryBuilder: Symbol.for('SiteQueryBuilder'),
             DtoBuilder: Symbol.for('DtoBuilder')
         },
         PROVIDERS: {

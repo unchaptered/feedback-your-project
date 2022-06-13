@@ -5,6 +5,28 @@ export interface ISite {
     url: string;
     name: string;
     description?: string;
-    tokenValue?: string;
+    // tokenValue?: string;
 
-}
+};
+
+export interface ISiteForPost {
+
+    url: string;
+    name: string;
+    description?: string;
+
+};
+
+export interface ISiteForPut {
+
+    url?: string;
+    name?: string;
+    description?: string;
+
+};
+
+export interface ISiteUrl {
+
+    url: string;
+
+};

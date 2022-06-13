@@ -14,6 +14,30 @@ export class CustomException implements ICustomException {
     }
 
 };
+
+/**
+ * 400 BadRequest
+ */
+ export class BadRequestException extends CustomException {
+
+    constructor(message: string) {
+
+        super('BadRequestException', message, 400);
+
+    }
+
+};
+
+/**
+ * 401 Unauthorized
+ */
+export class UnauthorizedException extends CustomException {
+
+    constructor(message: string) {
+        super('UnauthorizedException', message, 401);
+    }
+};
+
 /**
  * 404 NotFound
  */
@@ -36,19 +60,6 @@ export class ConflictException extends CustomException {
         super('ConflictException', message, 409);
 
     }
-};
-
-/**
- * 400 BadRequest
- */
-export class BadRequestException extends CustomException {
-
-    constructor(message: string) {
-
-        super('BadRequestException', message, 400);
-
-    }
-
 };
 
 export class IntervalServerError extends CustomException {

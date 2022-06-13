@@ -6,6 +6,7 @@ import { IDevQueryBuilder } from './interfaces/i.dev.query.builder';
 
 // Dtos
 import { IDevForJoin, IDevForLogin } from '../../models/interface.loader';
+import { SiteUrl, SiteForPost, SiteForPut, Site } from '../../models/class.loader';
 
 
 @provide(BUILDERS.DevQueryBuilder)

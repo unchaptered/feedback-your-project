@@ -24,6 +24,7 @@ export interface I_CLASSES {
         };
         export interface I_BUILDERS {
             DevQueryBuilder: symbol,
+            SiteQueryBuilder: symbol,
             DtoBuilder: symbol
         };
         export interface I_VALIDATORS {
@@ -48,8 +49,10 @@ export interface I_CLASSES {
         export interface I_SERVICES {
             HomeService: symbol,
             AuthService: symbol
+            AdminService: symbol,
         };
         export interface I_REPOSITORIES {
             HomeRepository: symbol,
-            AuthRepository: symbol
+            AuthRepository: symbol,
+            AdminRepository: symbol,
         };

@@ -7,8 +7,10 @@ import { IDtoBuilder } from './interfaces/i.dto.builder';
 import { BaseModule } from '../base/base.modules';
 
 // Dtos (classes & interfaces)
-import { Dev, DevForJoin, DevForLogin, DevForToken } from '../../models/class.loader';
-import { IDev, IDevForJoin, IDevForLogin, IDevForToken } from '../../models/interface.loader';
+import { Dev, DevForJoin, DevForLogin, DevForToken, Site, SiteForPost, SiteForPut, SiteUrl } from '../../models/class.loader';
+import {
+    IDev, IDevForJoin, IDevForLogin, IDevForToken,
+    ISite, ISiteForPost, ISiteForPut, ISiteUrl } from '../../models/interface.loader';
 
 // Providers
 import { JoiValidator } from '../module.loader';
@@ -27,7 +29,6 @@ export class DtoBuilder extends BaseModule implements IDtoBuilder {
     ) {
         super();
     }
-
 
     /**
      * @throws 'CustomException'
@@ -108,5 +109,50 @@ export class DtoBuilder extends BaseModule implements IDtoBuilder {
         }
 
     }
+
+    public async getSite(data: ISite): Promise<Site> {
+
+        try {
+            return new Site(
+                await this.joi.validate(data, Site.joiObject));
+        } catch(err) {
+            throw this.errorHandler(err);
+        }
+
+    }
+
+  
+    public async getSiteForPost(data: ISiteForPost): Promise<SiteForPost> {
+
+        try {
+            return new SiteForPost(
+                await this.joi.validate(data, SiteForPost.joiObject));
+        } catch(err) {
+            throw this.errorHandler(err);
+        }
+
+    };
+    public async getSiteForPut(data: ISiteForPut): Promise<SiteForPut> {
+
+        try {
+            return new SiteForPut(
+                await this.joi.validate(data, SiteForPut.joiObject));
+        } catch(err) {
+            throw this.errorHandler(err);
+        }
+
+    };
+
+    public async getSiteUrl(data: ISiteUrl): Promise<SiteUrl> {
+
+        try {
+            return new SiteUrl(
+                await this.joi.validate(data, SiteUrl.joiObject));
+        } catch(err) {
+            throw this.errorHandler(err);
+        }
+
+    };  
+
 
 };

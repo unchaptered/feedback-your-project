@@ -5,10 +5,10 @@ import { I_CLASSES } from './constants/constant.loader';
 
 // Providers
 import {
-    DevQueryBuilder, DtoBuilder,                    // Builders
+    DevQueryBuilder, SiteQueryBuilder,  DtoBuilder, // Builders
     TokenFactory, ConfigFactory, PostgresFactory,   // Factorries
     LoggerProvider, ResponseProvider,               // Providers
-    JoiValidator                                    // Validators
+    JoiValidator,                                   // Validators
 } from './modules/module.loader';
 
 // Middlewares
@@ -17,8 +17,8 @@ import {
 } from './middlewares/middleware.loader';
 
 // Layers
-import { AuthService, HomeService } from './routes/service.loader';
-import { AuthRepository, HomeRepository } from './routes/repository.loader';
+import { AdminService, AuthService, HomeService } from './routes/service.loader';
+import { AdminRepository, AuthRepository, HomeRepository } from './routes/repository.loader';
 
 
 
@@ -44,6 +44,7 @@ export const createContainer = (CLASSES: I_CLASSES): Container => {
 
     // Modules - Builders
     con.bind<DevQueryBuilder>(BUILDERS.DevQueryBuilder).to(DevQueryBuilder);
+    con.bind<SiteQueryBuilder>(BUILDERS.SiteQueryBuilder).to(SiteQueryBuilder);
     con.bind<DtoBuilder>(BUILDERS.DtoBuilder).to(DtoBuilder);
 
     // Modules - Validators
@@ -56,9 +57,11 @@ export const createContainer = (CLASSES: I_CLASSES): Container => {
     // Layers
     con.bind<HomeService>(SERVICES.HomeService).to(HomeService);
     con.bind<AuthService>(SERVICES.AuthService).to(AuthService);
+    con.bind<AdminService>(SERVICES.AdminService).to(AdminService);
     
     con.bind<HomeRepository>(REPOSITORIES.HomeRepository).to(HomeRepository);
     con.bind<AuthRepository>(REPOSITORIES.AuthRepository).to(AuthRepository);
+    con.bind<AdminRepository>(REPOSITORIES.AdminRepository).to(AdminRepository);
 
     return con;
 

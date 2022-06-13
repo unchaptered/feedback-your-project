@@ -10,7 +10,7 @@ import { ICustomException } from './interfaces/dtos/i.error';
 
 // Dtos for Layer Providers
 import { IDev, IDevForLogin, IDevForJoin, IDevForToken } from './interfaces/services/i.dev';
-import { ISite } from './interfaces/services/i.site';
+import { ISite, ISiteForPost, ISiteForPut, ISiteUrl } from './interfaces/services/i.site';
 
 // Joi
 
@@ -26,10 +26,14 @@ export {
     ICustomException,
 
     IDev,
-    ISite,
-
     IDevForJoin,
     IDevForLogin,
     IDevForToken,
+
+    
+    ISite,
+    ISiteForPost,
+    ISiteForPut,
+    ISiteUrl,
     
 };
