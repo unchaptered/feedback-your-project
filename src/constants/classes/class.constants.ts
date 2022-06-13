@@ -23,6 +23,9 @@ export const CLASSES: I_CLASSES = {
         GUARDS: {
             AccessTokenGuard: Symbol.for('AccessTokenGuard'),
             RefreshTokenGuard: Symbol.for('RefreshTokenGuard')
+        },
+        FILTERS: {
+            TokenRepublisherFilter: Symbol.for('TokenRepublisherFilter')
         }
     },
     MODULES: {

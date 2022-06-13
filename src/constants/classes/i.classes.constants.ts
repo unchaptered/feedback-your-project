@@ -5,12 +5,16 @@ export interface I_CLASSES {
 };
 
     export interface I_MIDDLEWARES {
-        GUARDS: I_GUARDS
+        GUARDS: I_GUARDS,
+        FILTERS: I_FILTERS
     };
         export interface I_GUARDS {
             AccessTokenGuard: symbol,
             RefreshTokenGuard: symbol
         };
+        export interface I_FILTERS {
+            TokenRepublisherFilter: symbol
+        }
     export interface I_MODULES {
         FACTORIES: I_FACTORIES,
         BUILDERS: I_BUILDERS,

@@ -6,7 +6,7 @@ import { SERVICES, REPOSITORIES, FACTORIES, PROVIDERS } from '../../constants/co
 
 // Classes (Layer & Modules)
 import { BaseLayer } from '../base/base.layer';
-import { AuthRepository } from '../repository.loader';
+import { AuthRepository } from '../layer.loader';
 import { ResponseProvider, TokenFactory } from '../../modules/module.loader';
 
 // Dtos (classes & interfaces)

@@ -1,13 +1,13 @@
 import { inject } from 'inversify';
 import { JsonResult } from 'inversify-express-utils/lib/results';
-import { controller, httpDelete, httpGet, httpPatch, httpPost, httpPut, requestBody } from 'inversify-express-utils';
+import { controller, httpDelete, httpGet, httpPatch, httpPost, httpPut, requestBody, requestHeaders } from 'inversify-express-utils';
 
 // DI Constants
 import { BUILDERS, GUARDS, PATHS, PROVIDERS, SERVICES } from '../../constants/constant.loader';
 
 // Classes (Layer & Modules)
 import { BaseController } from '../base/base.controller';
-import { SiteService } from '../service.loader';
+import { SiteService } from '../layer.loader';
 import { DtoBuilder, LoggerProvider, ResponseProvider } from '../../modules/module.loader';
 
 // Dtos (Classes & Interfaces)
@@ -35,14 +35,16 @@ export class SiteController extends BaseController {
      * @param `ISite`
      * @returns `Promise<JsonResult>`
      */
-    @httpPost('/', GUARDS.AccessTokenGuard)
-    public async postSite(@requestBody() iSite: ISiteForPost): Promise<JsonResult> {
+    @httpPost('/', GUARDS.RefreshTokenGuard)
+    public async postSite(
+        @requestBody() iSite: ISiteForPost
+    ): Promise<JsonResult> {
 
         try {
 
-            const dto = await this.dtoBuilder.getSiteForPost(iSite);
+            const site = await this.dtoBuilder.getSiteForPost(iSite);
 
-            const result = await this.siteService.postSite(dto);
+            const result = await this.siteService.postSite(site);
 
             if (result.rowCount === 0) throw new UnkownServerError('알 수 없는 이유로 등록에 실패하였습니다.');
             else {
@@ -110,6 +112,7 @@ export class SiteController extends BaseController {
      */
     @httpDelete('/')
     public async disableSite(@requestBody() iSite: ISiteUrl): Promise<JsonResult> {
+
         try {
             
             const dto = await this.dtoBuilder.getSiteUrl(iSite);
@@ -127,6 +130,7 @@ export class SiteController extends BaseController {
                 result.statusCode);
 
         }
+        
     }
 
 

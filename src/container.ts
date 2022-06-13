@@ -1,24 +1,27 @@
 import { Container } from 'inversify';
 
-// Constants
+// DI Constants
 import { I_CLASSES } from './constants/constant.loader';
 
-// Providers
+// Layers
+import {
+    AuthService, HomeService, SiteService,          // Services
+    AuthRepository, HomeRepository, SiteRepository  // Repositories
+} from './routes/layer.loader';
+
+// Middlewares
+import { 
+    AccessTokenGuard, RefreshTokenGuard,            // Guards
+    TokenRepublisherFilter                          // Filter
+} from './middlewares/middleware.loader';
+
+// Modules
 import {
     DevQueryBuilder, SiteQueryBuilder,  DtoBuilder, // Builders
     TokenFactory, ConfigFactory, PostgresFactory,   // Factorries
     LoggerProvider, ResponseProvider,               // Providers
     JoiValidator,                                   // Validators
 } from './modules/module.loader';
-
-// Middlewares
-import { 
-    AccessTokenGuard, RefreshTokenGuard, // Guards
-} from './middlewares/middleware.loader';
-
-// Layers
-import { AuthService, HomeService, SiteService } from './routes/service.loader';
-import { AuthRepository, HomeRepository, SiteRepository } from './routes/repository.loader';
 
 
 
@@ -27,15 +30,24 @@ export const createContainer = (CLASSES: I_CLASSES): Container => {
     const con = new Container();
 
     const {
-        MIDDLEWARES: { GUARDS },
+        MIDDLEWARES: { GUARDS, FILTERS },
         LAYERS: { CONTROLLERS, REPOSITORIES, SERVICES },
         MODULES: { BUILDERS, FACTORIES, PROVIDERS, VALIDATORS }
     } = CLASSES;
 
-    // Guards
-
     con.bind<AccessTokenGuard>(GUARDS.AccessTokenGuard).to(AccessTokenGuard);
     con.bind<RefreshTokenGuard>(GUARDS.RefreshTokenGuard).to(RefreshTokenGuard);
+
+    con.bind<TokenRepublisherFilter>(FILTERS.TokenRepublisherFilter).to(TokenRepublisherFilter);
+
+    // Layers
+    con.bind<HomeService>(SERVICES.HomeService).to(HomeService);
+    con.bind<AuthService>(SERVICES.AuthService).to(AuthService);
+    con.bind<SiteService>(SERVICES.SiteService).to(SiteService);
+    
+    con.bind<HomeRepository>(REPOSITORIES.HomeRepository).to(HomeRepository);
+    con.bind<AuthRepository>(REPOSITORIES.AuthRepository).to(AuthRepository);
+    con.bind<SiteRepository>(REPOSITORIES.SiteRepository).to(SiteRepository);
 
     // Modules - Factories
     con.bind<TokenFactory>(FACTORIES.TokenFactory).to(TokenFactory);
@@ -54,14 +66,7 @@ export const createContainer = (CLASSES: I_CLASSES): Container => {
     con.bind<LoggerProvider>(PROVIDERS.LoggerProvider).to(LoggerProvider);
     con.bind<ResponseProvider>(PROVIDERS.ResponseProvider).to(ResponseProvider);
 
-    // Layers
-    con.bind<HomeService>(SERVICES.HomeService).to(HomeService);
-    con.bind<AuthService>(SERVICES.AuthService).to(AuthService);
-    con.bind<SiteService>(SERVICES.SiteService).to(SiteService);
-    
-    con.bind<HomeRepository>(REPOSITORIES.HomeRepository).to(HomeRepository);
-    con.bind<AuthRepository>(REPOSITORIES.AuthRepository).to(AuthRepository);
-    con.bind<SiteRepository>(REPOSITORIES.SiteRepository).to(SiteRepository);
+
 
     return con;
 

@@ -4,11 +4,11 @@ import { JsonResult } from 'inversify-express-utils/lib/results';
 import { controller, httpPost, requestBody } from 'inversify-express-utils';
 
 // DI Constatns
-import { PATHS, GUARDS, SERVICES, PROVIDERS, BUILDERS } from '../../constants/constant.loader';
+import { PATHS, GUARDS, SERVICES, PROVIDERS, BUILDERS, FILTERS } from '../../constants/constant.loader';
 
 // Classes (Layer & Modules)
 import { BaseController } from '../base/base.controller';
-import { AuthService } from '../service.loader';
+import { AuthService } from '../layer.loader';
 import { DtoBuilder, LoggerProvider, ResponseProvider } from '../../modules/module.loader';
 
 // Dtos (Classes & Interfaces)
@@ -61,7 +61,7 @@ export class AuthController extends BaseController {
     }
 
     // 엑세스 토큰 재발행, 리프레쉬 토큰 필요
-    @httpPost('/re/token', GUARDS.RefreshTokenGuard)
+    @httpPost('/re/token', FILTERS.TokenRepublisherFilter)
     public republishAccessToken() {
         // Guards 에서 재발행외 되고 있습니다.
     }

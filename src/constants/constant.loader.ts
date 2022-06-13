@@ -3,7 +3,7 @@ import { CLASSES } from './classes/class.constants';
 import {
     I_CLASSES,
         I_MIDDLEWARES,
-            I_GUARDS,
+            I_GUARDS, I_FILTERS,
         I_MODULES,
             I_FACTORIES, I_BUILDERS, I_VALIDATORS, I_PROVIDERS,
         I_LAYERS,
@@ -11,6 +11,7 @@ import {
  } from './classes/i.classes.constants';
 
 const GUARDS: I_GUARDS = CLASSES.MIDDLEWARES.GUARDS;
+const FILTERS: I_FILTERS = CLASSES.MIDDLEWARES.FILTERS;
 
 const BUILDERS: I_BUILDERS = CLASSES.MODULES.BUILDERS;
 const FACTORIES: I_FACTORIES = CLASSES.MODULES.FACTORIES;
@@ -30,6 +31,7 @@ export {
     // Middlewares
     I_MIDDLEWARES,
     GUARDS, I_GUARDS,
+    FILTERS, I_FILTERS,
 
     // Modules
     I_MODULES,

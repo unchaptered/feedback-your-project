@@ -1,5 +1,5 @@
 // Filter
-import { TokenRepublisherFilter } from './filters/refresh.token.filter';
+import { TokenRepublisherFilter } from './filters/token.republish.filter';
 
 // Guards
 import { AccessTokenGuard  } from './guards/access.token.guard';
