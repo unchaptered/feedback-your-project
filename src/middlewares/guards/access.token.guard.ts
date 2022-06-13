@@ -2,14 +2,12 @@ import { ParsedQs } from 'qs';
 import { inject } from 'inversify';
 import * as express from 'express';
 import { provide } from 'inversify-binding-decorators';
-import { BaseHttpController, BaseMiddleware } from 'inversify-express-utils';
+import { BaseMiddleware } from 'inversify-express-utils';
 import { ParamsDictionary } from 'express-serve-static-core';
 
-// di
+// DI Constants
 import { IMiddleware } from '../base/i.middleware';
 import { GUARDS, FACTORIES, PROVIDERS } from '../../constants/constant.loader';
-
-// modules
 import { LoggerProvider, ResponseProvider, TokenFactory } from '../../modules/module.loader';
 
 
@@ -34,7 +32,7 @@ export class AccessTokenGuard extends BaseMiddleware implements IMiddleware {
         next: express.NextFunction
     ) {
 
-        const accessToken = req.headers.authorization?.split('Bearer ')[1];
+        const accessToken = this.tokenFactory.extract(req.headers.authorization);
         if (!accessToken) {
 
             this.logProvider.writeError(this.getIp(), '엑세스 토큰이 누락되었습니다.');

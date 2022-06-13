@@ -7,8 +7,11 @@ import { RefreshTokenGuard } from './guards/refresh.token.guard';
 
 export {
 
+    // Filters
+    TokenRepublisherFilter,
+
+    // Guards
     AccessTokenGuard,
     RefreshTokenGuard,
-    TokenRepublisherFilter,
 
 };

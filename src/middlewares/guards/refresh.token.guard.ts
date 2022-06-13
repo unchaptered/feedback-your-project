@@ -5,11 +5,9 @@ import { provide } from 'inversify-binding-decorators';
 import { BaseMiddleware } from 'inversify-express-utils';
 import { ParamsDictionary } from 'express-serve-static-core';
 
-// di
+// DI Constants
 import { IMiddleware } from '../base/i.middleware';
 import { GUARDS, FACTORIES, PROVIDERS } from '../../constants/constant.loader';
-
-// modules
 import { LoggerProvider, ResponseProvider, TokenFactory } from '../../modules/module.loader';
 
 
@@ -32,10 +30,13 @@ export class RefreshTokenGuard extends BaseMiddleware implements IMiddleware {
         res: express.Response<any, Record<string, any>>,
         next: express.NextFunction
     ) {
-        const accessToken = req.headers.authorization?.split('Bearer ')[1];
-        const refreshToken = req.headers.refreshtoken instanceof Array ?
-                                req.headers?.refreshtoken[0] :
-                                req.headers?.refreshtoken;
+        
+        const accessToken = this.tokenFactory.extract(req.headers.authorization);
+        const refreshToken = this.tokenFactory.extract(req.headers.refreshtoken);
+        // const accessToken = req.headers.authorization?.split('Bearer ')[1];
+        // const refreshToken = req.headers.refreshtoken instanceof Array ?
+        //                         req.headers?.refreshtoken[0] :
+        //                         req.headers?.refreshtoken;
 
         if (!accessToken || !refreshToken) {
 
